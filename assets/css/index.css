@@ -1,8 +1,23 @@
+/* css des balises */
 body{
-  width: 99vw; height: 100%;
+  width: 99vw;
   max-width: 100vw;
-  
+  margin: 0; padding: 0;
 }
-#banner{
-  height: 30%;
+table{
 }
+th{
+  display: table;
+}
+/* fin des balises */
+/* css des id */
+#container{
+  margin: 0px 80px;
+  margin-bottom: 150px;
+}
+#answerEx1{
+ 
+}
+
+/* fin css des id */
+/* css class */
