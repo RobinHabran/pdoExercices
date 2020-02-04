@@ -55,17 +55,28 @@ $listClientsM = $dataClientsM->fetchAll(PDO::FETCH_OBJ);
 
 // Ex6 : Afficher le titre de tous les spectacles ainsi que l'artiste, la date et l'heure.Trier les titres par ordre alphabétique. Afficher les résultat comme ceci : Spectacle par artiste, le date à heure..
 // requete sql
-$requeteShowsSql = 'SELECT `title` AS `show`, `performer` AS `by`, DATE_FORMAT(`date`,"%d:%m:%Y") AS `on`, `startTime` AS `at` FROM `shows` ORDER BY `title` ASC;';
+$requeteShowsSql = 'SELECT `title` AS `show`, `performer` AS `by`, DATE_FORMAT(`date`,"%d/%m/%Y") AS `on`, `startTime` AS `at` FROM `shows` ORDER BY `title` ASC;';
 // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
 $dataShows = $dataBase->query($requeteShowsSql);
 // la méthode 'fetchAll(PDO::FETCH_OBJ)' retourne un tableau d'objet des resultats de la requete sql
 $listShows = $dataShows->fetchAll(PDO::FETCH_OBJ);
 
-// Ex7 : Afficher le titre de tous les spectacles ainsi que l'artiste, la date et l'heure.Trier les titres par ordre alphabétique. Afficher les résultat comme ceci : Spectacle par artiste, le date à heure..
+// Ex 7 : Afficher tous les clients
 // requete sql
-$requeteShowsSql = 'SELECT UPPER(`lastName`) AS lastname,`firstName` FROM `clients` ORDER BY `lastName`';
+$requeteClientsFullSql = 'SELECT'
+                      . ' UPPER(`lastName`) AS `lastname`,'
+                      . ' `clients`.`firstName`,'
+                      . ' DATE_FORMAT(`clients`.`birthDate`,"%d/%m/%Y") AS `birthDate`,'
+                      . ' IF(`clients`.`card` = 1,`cardTypes`.`type`, "NO CARD") AS `ownsCard`,'
+                      . ' IF(`clients`.`card` = 1,`clients`.`cardNumber`, "") AS `cardNumber`'
+                  . ' FROM'
+                      . ' `clients`'
+                      . ' LEFT JOIN `cards` on `clients`.`cardNumber` = `cards`.`cardNumber`'
+                      . ' LEFT JOIN `cardTypes` on `cards`.`cardTypesId` = `cardTypes`.`id`'
+                  . ' ORDER BY'
+                       .' `lastName`';
 // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
-$dataShows = $dataBase->query($requeteShowsSql);
+$dataClientsFull = $dataBase->query($requeteClientsFullSql);
 // la méthode 'fetchAll(PDO::FETCH_OBJ)' retourne un tableau d'objet des resultats de la requete sql
-$listShows = $dataShows->fetchAll(PDO::FETCH_OBJ);
+$listClientsFull = $dataClientsFull->fetchAll(PDO::FETCH_OBJ);
 

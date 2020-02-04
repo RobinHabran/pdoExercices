@@ -26,7 +26,7 @@ include_once '../assets/php/ctrl.php';
             ?><table><?php
             // affichage en objet des résultats de la requete client
             foreach($listClients as $clients){
-              ?><th><?=$clients->lastname, ' ', $clients->firstName;?></th><?php
+              ?><th><?=$clients->lastname; ?> <?=$clients->firstName; ?></th><?php
             }
             ?></table><?php
           }
@@ -52,7 +52,7 @@ include_once '../assets/php/ctrl.php';
             <?php
             // affichage en objet des résultats de la requete client
             foreach($listClientsLimit as $clientsLimit){
-              ?><th><?=$clientsLimit->lastname . ' ' . $clientsLimit->firstName; ?></th><?php
+              ?><th><?=$clientsLimit->lastname; ?> <?=$clientsLimit->firstName; ?></th><?php
             }
             ?>
           </table>
@@ -65,7 +65,7 @@ include_once '../assets/php/ctrl.php';
             <?php
             // affichage en objet des résultats de la requete client
             foreach($listClientsCard as $clients){
-              ?><th><?=$clients->lastname . ' ' . $clients->firstName; ?></th><?php
+              ?><th><?=$clients->lastname; ?> <?= $clients->firstName; ?></th><?php
             }
             ?>
           </table>
@@ -78,11 +78,12 @@ include_once '../assets/php/ctrl.php';
             <?php
             // affichage en objet des résultats de la requete client
             foreach($listClientsM as $clients){
-              ?><th><?= $clients->lastname . ' ' . $clients->firstName; ?></th><?php
+              ?><th><?= $clients->lastname; ?> <?=$clients->firstName; ?></th><?php
             }
             ?>
           </table>
         </div>
+        <hr>
         <div id="answerEx6">
           <h3>Exercice 6 : </h3>
           <p>Afficher le titre de tous les spectacles ainsi que l'artiste, la date et l'heure. 
@@ -93,11 +94,45 @@ include_once '../assets/php/ctrl.php';
             <?php
             // affichage en objet des résultats de la requete client
             foreach($listShows as $shows){
-              ?><th><?= 'Spectable : ' . $shows->show . ' par ' . $shows->by . ', le ' . $shows->on . ' à ' . $shows->at ; ?></th><?php
+              ?><th>Spectable : <?=$shows->show; ?> par <?=$shows->by; ?>, le <?=$shows->on; ?> à <?=$shows->at; ?></th><?php
             
               //date("d-m-Y", strtotime($shows->on))
             }
             ?>
+          </table>
+        </div>
+        <hr>
+        <div id="answerEx7">
+          <h3>Exercice 7 : </h3>
+          <p>Afficher le titre de tous les spectacles ainsi que l'artiste, la date et l'heure. 
+            Trier les titres par ordre alphabétique. 
+            Afficher les résultat comme ceci : Spectacle par artiste, le date à heure.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Nom de famille</th>
+                <th>prénom</th>
+                <th>date de naissance</th>
+                <th>Carte de fidélité</th>
+                <th>Numéro de carte</th>
+              </tr>
+            </thead>
+            <tbody>
+                <?php
+                // affichage en objet des résultats de la requete client
+                foreach($listClientsFull as $clientsFull){?>
+                <tr>
+                  <td><?= $clientsFull->lastname; ?></td>
+                  <td><?= $clientsFull->firstName; ?></td>
+                  <td><?= $clientsFull->birthDate; ?></td>
+                  <td><?= $clientsFull->ownsCard; ?></td>
+                  <td><?= $clientsFull->cardNumber; ?></td>
+                </tr>
+                <?php
+                }
+                ?>
+            </tbody>
           </table>
         </div>
       </div>
