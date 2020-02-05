@@ -1,17 +1,18 @@
 <?php
-include_once '../assets/php/ctrl.php';
+include_once 'assets/php/controllers/ctrl.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link rel="stylesheet" href="../assets/css/index.css" />
+        <link rel="stylesheet" href="assets/css/index.css" />
         <link href="https://fonts.googleapis.com/css?family=PT+Sans&display=swap" rel="stylesheet">
         <title>pdo</title>
     </head>
     <body>
       <div id="container">
+        <a href='indexCorrection.php'>correction</a>
         <div id="banner">
         </div>
         <h1>Programmation orientée objet PHP</h1>
