@@ -55,7 +55,7 @@ $listClientsM = $dataClientsM->fetchAll(PDO::FETCH_OBJ);
 
 // Ex6 : Afficher le titre de tous les spectacles ainsi que l'artiste, la date et l'heure.Trier les titres par ordre alphabétique. Afficher les résultat comme ceci : Spectacle par artiste, le date à heure..
 // requete sql
-$requeteShowsSql = 'SELECT `title` AS `show`, `performer` AS `by`, DATE_FORMAT(`date`,"%d/%m/%Y") AS `on`, `startTime` AS `at` FROM `shows` ORDER BY `title` ASC;';
+$requeteShowsSql = 'SELECT `title` AS `show`, `performer` AS `by`, DATE_FORMAT(`date`,\'%d/%m/%Y\') AS `on`, `startTime` AS `at` FROM `shows` ORDER BY `title` ASC;';
 // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
 $dataShows = $dataBase->query($requeteShowsSql);
 // la méthode 'fetchAll(PDO::FETCH_OBJ)' retourne un tableau d'objet des resultats de la requete sql

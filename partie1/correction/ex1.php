@@ -1,6 +1,7 @@
 <?php
-include_once '../assets/php/controllers/indexCtrl.php';
-include_once '../assets/php/models/clients.php';
+phpinfo();
+include_once 'controllers/ex1/indexCtrl.php';
+include_once 'models/ex1/clients.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">

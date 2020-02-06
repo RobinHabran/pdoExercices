@@ -12,7 +12,7 @@
       </div>
       <div>
         <a id="partie1" href="partie1/index.php">Partie 1</a>
-        <a id="partie1" href="partie1/correction/index.php">Partie 1 correction</a>
+        <a id="partie1" href="partie1/correction/ex1.php">Partie 1 correction</a>
         <a id="partie1" href="partie2/index.php">Partie 2</a>
         <a id="partie1" href="partie1/index.php">Travaux pratiques</a>
       </div>

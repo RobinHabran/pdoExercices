@@ -1,4 +1,5 @@
 <?php
+include_once '../assets/php/controllers/.password.php';
 /* modele client  */
 /**
  * Description of clients
@@ -14,7 +15,7 @@ class clients {
   public $card = false;
   public $cardNumber = '';
   
-  private $database = NULL;
+  private $dataBase = NULL;
   
   /**
    * la méthode construit l'objet client représentant la table clients

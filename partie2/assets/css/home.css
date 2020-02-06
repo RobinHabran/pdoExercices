@@ -26,9 +26,9 @@ header.masthead {
   background-size: cover;
 }
 .navbar{
-  background-color: #28a74580;
+  background-color: #28a74590;
 }
-.navbar a{
+#navbar a{
   color: white;
 }
 #navbarResponsive a{
@@ -52,11 +52,40 @@ header.masthead {
 #btnScrollRegister:hover{
   background-color: #28a745;
 }
-#patient{
-  height: 100vh;
+section#patient {
+  height: 100%;
+  padding-top: 10rem;
+  padding-bottom: calc(10rem - 72px);
+  background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 50%), url("../img/desk.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 #patient{
 }
 #containerPatient{
-  padding-top: 150px;
+}
+form{
+  color: white;
+  margin-top: 50px;
+  padding: 35px 45px;
+  border-radius: 10px;
+  background-color: #80be8680;
+}
+.feedback{
+  padding: 1px 15px 1px 10px;
+  display: table;
+  background-color: #ffffff80;
+  font-weight: bold;
+}
+legend{
+  font-size: 1.3rm;
+  font-weight: bold;
+}
+small{
+  color: #cccccc;
+}
+label{
+  margin-top: 15px;
 }
