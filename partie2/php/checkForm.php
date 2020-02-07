@@ -7,17 +7,12 @@
  */
 class checkForm {
   private $name = '/^[A-Z][a-zéèà \-]+$/i';
-  private $birthDate = '^((?:19|20)(?:[\d]{2}))-((?:[0][\d])|(?:[1][0-2]))-((?:(0|1|2)[\d])|(?:[3][0-1]))$';
+  private $dateSql = '^((?:19|20)(?:[\d]{2}))-((?:[0][\d])|(?:[1][0-2]))-((?:(0|1|2)[\d])|(?:[3][0-1]))$';
   private $cellNumber = '/^([0]|[\+][3]{2})([\s]?[\d][\s]?){9}$/i';
   private $email = '/^(.*)([@]{1})(.*)([.]{1})([a-z]{2,})$/i';
   public $value = '';
+  public $valueType = '';
   public $error='';
-  /**
-   * Prend le type de vérification :
-   *  __name pour une nom ou prénom
-   * @var string 
-   */
-  public $valueType='';
   
   public function __construct() {
     
@@ -27,13 +22,18 @@ class checkForm {
    * @return boolean
    */
   private function compareRegexWithPost(){
-    return preg_match($valeur, $regex);
+    return preg_match($this->value, $this->getCorrespondantRegexWithPost());
   }
   
   private function getCorrespondantRegexWithPost(){
-    
+    // faire un if et pas une ternaire
+    $regex = ($this->valueType == 'date') ? $this->dateSql :'';
+    return $regex;
   }
-          
+  /**
+   * la fonction return le type de la valeur de l'attribut value
+   * @return string
+   */
   private function getTypeOfPost(){
     return gettype($this->value);
   }
@@ -41,9 +41,9 @@ class checkForm {
   public function checkPostValue(){
     if (!empty($this->value)) { // cas d'erreur firstname && lastname champ vide
     // comparaison de valeur avec la regex
-    if () {
+    if ($this->compareRegexWithPost()) {
       // 'htmlspecialchars()' remplace le balisage par leur valeur en html. ex: '<script>' devient '&lt script &gt'
-      $patient->birthDate = htmlspecialchars($this->value);
+      $this->value = htmlspecialchars($this->value);
     } else { // cas d'erreur non respect de la syntaxe
       $this->error = 'Veuillez indiquer un nom ne contenant que des lettres majuscules et miuscules';
     }
