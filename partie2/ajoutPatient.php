@@ -1,5 +1,5 @@
 <?php
-include_once 'php/controllers/index.php';
+include_once 'php/controllers/ajoutPatientCtrl.php';
 include_once 'php/models/patients.php';
 ?>
 <!doctype html>
@@ -28,46 +28,62 @@ include_once 'php/models/patients.php';
       <section class="page-section" id="patient">
         <div class="container" id="containerPatient">
           <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-6">
               <div id="formPatiet">
                 <h2 class="text-white mt-0">Enregistrez vous comme patient</h2>
                 <p class="text-white-50 mb-4">Renseignez vos informations personnelles afin de vous enregistrer</p>
-                <form >
+                <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?>
+                <div class="col-lg-6">
+                  <p>Votre compte a bien été enregistré.</p>
+                </div>
+                <?php }else{ 
+                  if(isset($insertError)){ ?><div class="feedback valid-feedback"><?= $insertError ?></div><?php }
+                ?>
+                <form method="POST">
                   <fieldset>
                     <legend>Patient</legend>
                     <!--  lastname  -->
-                    <div class="form-group has-success">
-                      <label for="inputLastname">Nom</label>
-                      <input type="text" class="form-control is-valid" id="inputLastname" placeholder="Jean" value="">
-                      <div class="feedback valid-feedback">Champ renseigné avec succès</div>
+                    <div class="form-group">
+                      <label for="lastname">Nom</label>
+                      <input type="text" class="form-control is-valid" id="lastname" placeholder="Jean" value="">
+                      <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['firstname'])){ ?><div class="feedback invalid-feedback"><?= $formError['firstname'] ?></div><?php } ?>
                     </div>
                     <!--  firtname  -->
                     <div class="form-group has-danger">
-                      <label for="inputCellNumber">Prénom</label>
-                      <input type="text" class="form-control is-invalid" id="inputCellNumber" placeholder="Dupond" value="">
-                      <div class="feedback invalid-feedback">Veuillez renseigner ce champ</div>
+                      <label for="firsname">Prénom</label>
+                      <input type="text" class="form-control is-invalid" id="firsname" placeholder="Dupond" value="">
+                      <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['lastname'])){ ?><div class="feedback invalid-feedback"><?= $formError['lastname'] ?></div><?php } ?>
                     </div>
                     <!--  birthDate  -->
                     <div class="form-group">
                       <label for="birthDate">Date de naissance</label>
                       <input type="date" class="form-control" id="birthDate" value="">
+                      <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['birthDate'])){ ?><div class="feedback invalid-feedback"><?= $formError['birthDate'] ?></div><?php } ?>
                     </div>
                     <!--  numéro de téléphone  -->
                     <div class="form-group">
-                      <label for="inputCellPhone">Tél.</label>
-                      <input type="text" class="form-control" id="inputCellPhone" placeholder="06 25 63 49 75" value="">
+                      <label for="cellNumber">Tél.</label>
+                      <input type="text" class="form-control" id="cellNumber" placeholder="06 25 63 49 75" value="">
+                      <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['cellNumber'])){ ?><div class="feedback invalid-feedback"><?= $formError['cellNumber'] ?></div><?php } ?>
                     </div>
                     <!--  e-mail  -->
                     <div class="form-group">
-                      <label for="exampleInputEmail">E-mail</label>
-                      <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="jb.dupond@gmail.com" value="">
+                      <label for="email">E-mail</label>
+                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="jb.dupond@gmail.com" value="">
                       <small id="emailHelp" class="form-text">We'll never share your email with anyone else.</small>
+                      <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['email'])){ ?><div class="feedback invalid-feedback"><?= $formError['email'] ?></div><?php } ?>
                     </div>
                     <div class="d-flex align-items-end">
-                      <input type="submit" class="btn btn-success" py-5 value="Submit" />
+                      <input type="submit" class="btn btn-success" id="registerPatient" py-5 value="Submit" />
                     </div>
                   </fieldset>
                 </form>
+                <?php }?>
               </div>
             </div>
           </div>

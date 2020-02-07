@@ -1,5 +1,5 @@
 <?php
-include_once 'php/controllers/index.php';
+include_once 'php/controllers/indexCtrl.php';
 include_once 'php/models/patients.php';
 ?>
 <!doctype html>
