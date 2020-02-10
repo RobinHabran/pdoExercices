@@ -1,4 +1,5 @@
 <?php
+include_once '../models/patients.php';
 
 //fin déclaration des variables
 // on verifie que le bouton submit a été clické
@@ -33,7 +34,7 @@ if (isset($_POST['registerPatient'])){
   }
   // on érifie que le champ 'lastname' n'est pas vide
   $checkForm = new checkForm();
-  $checkForm->
+  $checkForm->value;
   // insertion des données
   if (count($formError) == 0) {
     $checkIfPatientExists = $patient->checkIfPatientExists();

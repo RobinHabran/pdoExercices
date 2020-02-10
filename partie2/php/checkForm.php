@@ -6,7 +6,7 @@
  * @author lmno002
  */
 class checkForm {
-  private $name = '/^[A-Z][a-zéèà \-]+$/i';
+  private $name = '/^[a-zéèà \-]+$/i';
   private $dateSql = '^((?:19|20)(?:[\d]{2}))-((?:[0][\d])|(?:[1][0-2]))-((?:(0|1|2)[\d])|(?:[3][0-1]))$';
   private $cellNumber = '/^([0]|[\+][3]{2})([\s]?[\d][\s]?){9}$/i';
   private $email = '/^(.*)([@]{1})(.*)([.]{1})([a-z]{2,})$/i';
@@ -25,17 +25,24 @@ class checkForm {
     return preg_match($this->value, $this->getCorrespondantRegexWithPost());
   }
   
-  private function getCorrespondantRegexWithPost(){
-    // faire un if et pas une ternaire
-    $regex = ($this->valueType == 'date') ? $this->dateSql :'';
-    return $regex;
-  }
   /**
-   * la fonction return le type de la valeur de l'attribut value
+   * méthode qui selectionne la regex adaptée selon le type de la value
    * @return string
    */
-  private function getTypeOfPost(){
-    return gettype($this->value);
+  private function getCorrespondantRegexWithPost(){
+    if($this->valueType == 'date'){
+      $regex = $this->dateSql;
+    }
+    if($this->valueType == 'name'){
+      $regex = $this->name;
+    }
+    if($this->valueType == 'cellNumber'){
+      $regex = $this->cellNumber;
+    }
+    if($this->valueType == 'email'){
+      $regex = $this->email;
+    }
+    return $regex;
   }
   
   public function checkPostValue(){

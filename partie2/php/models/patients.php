@@ -20,7 +20,7 @@ class patient {
    */
   public function __construct() {
     try {
-      $this->dataBase = new PDO('mysql:host=localhost;dbname=colyseum', 'robin', $passwordSql);
+      $this->dataBase = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'robin', $passwordSql);
     } catch (PDOException $exc) {
       $sqlError = die('database is not available');
     }
@@ -69,5 +69,4 @@ class patient {
     $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }
-
 }
