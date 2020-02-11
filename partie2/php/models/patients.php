@@ -1,4 +1,5 @@
 <?php
+//include_once '../controllers/.password.php';
 
 /**
  * Description of clients
@@ -20,7 +21,8 @@ class patient {
    */
   public function __construct() {
     try {
-      $this->dataBase = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'robin', $passwordSql);
+      //$this->dataBase = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'robin', $passwordSql);
+      $this->dataBase = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'robin', 'p[]7QD4j');
     } catch (PDOException $exc) {
       $sqlError = die('database is not available');
     }
@@ -63,7 +65,7 @@ class patient {
             . 'AND `email`=:email';
     $statement = $this->dataBase->prepare($request);
     $statement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
-    $statement->bindValue(':firtname', $this->firtname, PDO::PARAM_STR);
+    $statement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
     $statement->bindValue(':birthDate', $this->birthDate, PDO::PARAM_STR);
     $statement->bindValue(':cellNumber', $this->cellNumber, PDO::PARAM_STR);
     $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
