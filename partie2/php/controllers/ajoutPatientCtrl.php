@@ -10,7 +10,8 @@ if (isset($_POST['registerPatient'])){
 
   foreach($_POST as $postName => $value){
     if($postName != 'registerPatient'){
-      $regex->value = $postName;
+      $regex->postName = $postName; 
+      $regex->value = $value;
       // appel de la méthode checkPostValue de la class checkForm
       if(!$regex->checkPostValue()){
         $formError[$postName] = $regex->error;

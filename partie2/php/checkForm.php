@@ -26,10 +26,6 @@ class checkForm {
    * @return boolean
    */
   private function compareRegexWithPost(){
-    
-    /*
-     * probleme de value
-     */
     $this->value = $_POST[$this->postName];
     return preg_match($this->getCorrespondantRegexWithPost(), $this->value);
   }
@@ -67,8 +63,8 @@ class checkForm {
     return $regex;
   }
   
-    public function checkPostValue(){
-      $isValid = false;
+  public function checkPostValue(){
+    $isValid = false;
     if (!empty($this->value)) { 
       // comparaison de valeur avec la regex
       if ($this->compareRegexWithPost()) {
@@ -79,7 +75,7 @@ class checkForm {
         // cas du firstname et lastname
         if($this->valueType == 'name') $this->error = 'Veuillez n\'indiquer que des lettres majuscules et minuscules';
         // cas du date
-        if($this->valueType == 'date') $this->error = 'Veuillez inserer une date';
+        if($this->valueType == 'date') $this->error = 'Veuillez inserer une date de la forme 31/12/1990';
         // cas du cellNumber
         if($this->valueType == 'cellNumber') $this->error = 'Veuillez n\'inserer que des chiffres. Aucun autre caractère est autorisé';
         // cas du email
@@ -94,9 +90,9 @@ class checkForm {
       // cas du date
       if($this->postName == 'birthDate') $this->error = 'Veuillez inserer votre date de naissance';
       // cas du cellNumber
-      if($this->postName == 'cellNumber') $this->error = 'Veuillez n\'inserer que des chiffres';
+      if($this->postName == 'cellNumber') $this->error = 'Veuillez renseigner votre numéro de tél.';
       // cas du email
-      if($this->postName == 'email') $this->error = 'Veillez à ce que votre mail soit de la forme xxx@yyy.com';
+      if($this->postName == 'email') $this->error = 'Veillez renseigner votre e-mail';
     }
     //if($this->value != '') $formError[$this->value] = $this->error;
     return $isValid;  
