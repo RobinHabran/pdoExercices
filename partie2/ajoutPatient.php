@@ -31,9 +31,9 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
               <div id="formPatiet">
                 <h2 class="text-white mt-0">Enregistrez vous comme patient</h2>
                 <p class="text-white-50 mb-4">Renseignez vos informations personnelles afin de vous enregistrer</p>
-                <?php if(isset($_POST['registerPatient']) && count($formError) == 0){ ?>
-                <div class="col-lg-6">
-                  <p>Votre compte a bien été enregistré.</p>
+                <?php if(isset($_POST['registerPatient']) && (count($formError) == 0) && (!isset($insertError))){ ?>
+                <div class="col-12 validationRegisterSuccess">
+                  <p>Votre compte a été enregistré avec succès</p>
                 </div>
                 <?php }else{ 
                   if(isset($insertError)){ ?><div class="feedback valid-feedback"><?= $insertError ?></div><?php }
@@ -43,39 +43,39 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
                     <legend>Patient</legend>
                     <!--  lastname  -->
                     <div class="form-group">
-                      <label for="lastname">Nom</label>
-                      <input type="text" class="form-control <?= (empty($formError['lastname']) ? 'is-valid' : 'is-invalid') ?>" name="lastname" id="lastname" placeholder="Jean" value="<?= (!empty($_POST['lastname']) ? $_POST['lastname'] : '') ?>">
+                      <label for="lastname">Nom de famille</label>
+                      <input type="text" class="form-control <?= (empty($formError['lastname']) ? 'is-valid' : 'is-invalid') ?>" name="lastname" id="lastname" placeholder="Dupond" value="<?= (!empty($_POST['lastname']) ? $_POST['lastname'] : '') ?>">
                       <?php if(isset($_POST['registerPatient']) && !empty($_POST['firstname'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                       <?php if(isset($formError['lastname'])){ ?><div class="feedback invalid-feedback"><?= $formError['lastname'] ?></div><?php } ?>
                     </div>
                     <!--  firtname  -->
                     <div class="form-group">
                       <label for="firstname">Prénom</label>
-                      <input type="text" class="form-control <?= (empty($formError['firstname']) ? 'is-valid' : 'is-invalid') ?>" name="firstname" id="firstname" placeholder="Dupond" value="<?= (!empty($_POST['firstname']) ? $_POST['firstname'] : '') ?>">
+                      <input type="text" class="form-control <?= (empty($formError['firstname']) ? 'is-valid' : 'is-invalid') ?>" name="firstname" id="firstname" placeholder="Jean" value="<?= (!empty($_POST['firstname']) ? $_POST['firstname'] : '') ?>">
                       <?php if(isset($_POST['registerPatient']) && !empty($_POST['firstname'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                       <?php if(isset($formError['firstname'])){ ?><div class="feedback invalid-feedback"><?= $formError['firstname'] ?></div><?php } ?>
                     </div>
-                    <!--  birthDate  -->
+                    <!--  birthdate  -->
                     <div class="form-group">
-                      <label for="birthDate">Date de naissance</label>
-                      <input type="date" class="form-control <?= (empty($formError['birthDate']) ? 'is-valid' : 'is-invalid') ?>" name="birthDate" id="birthDate" value="<?= (!empty($_POST['birthDate']) ? $_POST['birthDate'] : '') ?>">
-                      <?php if(isset($_POST['registerPatient']) && !empty($_POST['birthDate']) && empty($formError['birthDate'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                      <?php if(isset($formError['birthDate'])){ ?><div class="feedback invalid-feedback"><?= $formError['birthDate'] ?></div><?php } ?>
+                      <label for="birthdate">Date de naissance</label>
+                      <input type="date" class="form-control <?= (empty($formError['birthdate']) ? 'is-valid' : 'is-invalid') ?>" name="birthdate" id="birthdate" value="<?= (!empty($_POST['birthdate']) ? $_POST['birthdate'] : '') ?>">
+                      <?php if(isset($_POST['registerPatient']) && !empty($_POST['birthdate']) && empty($formError['birthdate'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['birthdate'])){ ?><div class="feedback invalid-feedback"><?= $formError['birthdate'] ?></div><?php } ?>
                     </div>
                     <!--  numéro de téléphone  -->
                     <div class="form-group">
-                      <label for="cellNumber">Tél.</label>
-                      <input type="text" class="form-control <?= (empty($formError['cellNumber']) ? 'is-valid' : (isset($_POST['cellNumber'])) ? 'is-invalid' : '') ?>" name="cellNumber" id="cellNumber" placeholder="06 25 63 49 75" value="<?= (!empty($_POST['cellNumber']) ? $_POST['cellNumber'] : '') ?>">
-                      <?php if(isset($_POST['registerPatient']) && !empty($_POST['cellNumber']) && empty($formError['cellNumber'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                      <?php if(isset($formError['cellNumber'])){ ?><div class="feedback invalid-feedback"><?= $formError['cellNumber'] ?></div><?php } ?>
+                      <label for="phone">Tél.</label>
+                      <input type="text" class="form-control <?= (empty($formError['phone']) ? 'is-valid' : (isset($_POST['phone']) ? 'is-invalid' : '')) ?>" name="phone" id="phone" placeholder="06 25 63 49 75" value="<?= (!empty($_POST['phone']) ? $_POST['phone'] : '') ?>">
+                      <?php if(isset($_POST['registerPatient']) && !empty($_POST['phone']) && empty($formError['phone'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['phone'])){ ?><div class="feedback invalid-feedback"><?= $formError['phone'] ?></div><?php } ?>
                     </div>
                     <!--  e-mail  -->
                     <div class="form-group">
-                      <label for="email">E-mail</label>
-                      <input type="email" class="form-control <?= (empty($formError['email']) ? 'is-valid' : 'is-invalid') ?>" name="email" id="email" aria-describedby="emailHelp" placeholder="jb.dupond@gmail.com" value="<?= (!empty($_POST['email']) ? $_POST['email'] : '') ?>">
-                      <?php if(isset($_POST['registerPatient']) && !empty($_POST['email']) && empty($formError['email'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                      <?php if(isset($formError['email'])){ ?><div class="feedback invalid-feedback"><?= $formError['email'] ?></div><?php } ?>
-                      <small id="emailHelp" class="form-text">We'll never share your email with anyone else.</small>
+                      <label for="mail">E-mail</label>
+                      <input type="mail" class="form-control <?= (empty($formError['mail']) ? 'is-valid' : 'is-invalid') ?>" name="mail" id="mail" aria-describedby="mailHelp" placeholder="jb.dupond@gmail.com" value="<?= (!empty($_POST['mail']) ? $_POST['mail'] : '') ?>">
+                      <?php if(isset($_POST['registerPatient']) && !empty($_POST['mail']) && empty($formError['mail'])){ ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if(isset($formError['mail'])){ ?><div class="feedback invalid-feedback"><?= $formError['mail'] ?></div><?php } ?>
+                      <small id="mailHelp" class="form-text">Vous seul aurez vu de votre e-mail.</small>
                     </div>
                     <div class="d-flex align-items-end">
                       <input type="submit" class="btn btn-success" id="registerPatient" name="registerPatient" py-5 value="S'enregistrer" />
