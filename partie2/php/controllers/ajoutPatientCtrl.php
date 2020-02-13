@@ -29,11 +29,12 @@ if (isset($_POST['registerPatient'])){
   // si le tableau d'erreur est vide alors il n'y a pas d'erreur dédectée dans la valeur des input
   if (count($formError) == 0) {
     // vérification si le patient existe
-    if (!$patient->checkIfPatientExists()) {
+    $isPatientExist = $patient->checkIfPatientExists();
+    if(!$isPatientExist->patientExist){
       // cas où le patient n'existe pas encore en base de donnée
       // alors j'appel la méthode qui envoi les valeur dans la bd
       $patient->registerNewPatient();
-    }elseif($patient->checkIfPatientExists()>0){
+    }else{
       /**
        * Il ne rentre pas dans le if !!
        */

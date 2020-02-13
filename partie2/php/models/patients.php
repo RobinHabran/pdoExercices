@@ -59,17 +59,20 @@ class patient {
    * @return object
    */
   public function checkIfPatientExists() {
-    $request = 'SELECT COUNT(`id`)AS `patientExists` FROM `patients` WHERE `lastname`=:lastname '
-            . 'AND `firstname`=:firstname '
-            . 'AND `birthDate`=:birthDate '
-            . 'AND `cellNumber`=:cellNumber '
-            . 'AND `email`=:email';
-    $statement = $this->dataBase->prepare($request);
-    $statement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
-    $statement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
-    $statement->bindValue(':birthDate', $this->birthdate, PDO::PARAM_STR);
-    $statement->bindValue(':cellNumber', $this->phone, PDO::PARAM_STR);
-    $statement->bindValue(':email', $this->mail, PDO::PARAM_STR);
-    return $statement->fetchAll(PDO::FETCH_OBJ);
-  }
+        $requestToCheckPatient = 'SELECT COUNT(`id`) AS `patientExist` FROM `patients` WHERE `lastname`=:lastname'
+                . ' AND `firstname`=:firstname AND `birthdate`=:birthdate'
+                . ' AND `phone`=:phone AND `mail`=:mail';
+        
+        $request = $this->dataBase->prepare($requestToCheckPatient);
+        
+        $request->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+        $request->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+        $request->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+        $request->bindValue(':phone', $this->phone, PDO::PARAM_STR);
+        $request->bindValue(':mail', $this->mail, PDO::PARAM_STR);
+        
+        $request->execute();
+        
+        return $request->fetch(PDO::FETCH_OBJ);
+    }
 }
