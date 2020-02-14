@@ -1,6 +1,4 @@
 <?php
-//include_once '../controllers/.password.php';
-
 /**
  * Description of clients
  *
@@ -51,7 +49,14 @@ class patient {
     // la méthode 'fetchAll(PDO::FETCH_OBJ)' retourne un tableau d'objet des resultats de la requete sql
     return $statement->execute();
   }
-  
+
+  public function getPatientsList() {
+    $request = 'SELECT `id`, `lastname`, `firstname`, `birthdate` '
+            . 'FROM `patients`';
+    $statement = $this->dataBase->query($request);
+    return $statement->fetchAll(PDO::FETCH_OBJ);
+  }
+
   /**
    * la méthode renvoi le nombre de patient existant dans la base de donnée, dont toutes les informations d'inscription correspondent. 
    * case(0) : aucun patient qui match
@@ -59,20 +64,21 @@ class patient {
    * @return object
    */
   public function checkIfPatientExists() {
-        $requestToCheckPatient = 'SELECT COUNT(`id`) AS `patientExist` FROM `patients` WHERE `lastname`=:lastname'
-                . ' AND `firstname`=:firstname AND `birthdate`=:birthdate'
-                . ' AND `phone`=:phone AND `mail`=:mail';
-        
-        $request = $this->dataBase->prepare($requestToCheckPatient);
-        
-        $request->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
-        $request->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
-        $request->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
-        $request->bindValue(':phone', $this->phone, PDO::PARAM_STR);
-        $request->bindValue(':mail', $this->mail, PDO::PARAM_STR);
-        
-        $request->execute();
-        
-        return $request->fetch(PDO::FETCH_OBJ);
-    }
+    $requestToCheckPatient = 'SELECT COUNT(`id`) AS `patientExist` FROM `patients` WHERE `lastname`=:lastname'
+            . ' AND `firstname`=:firstname AND `birthdate`=:birthdate'
+            . ' AND `phone`=:phone AND `mail`=:mail';
+
+    $request = $this->dataBase->prepare($requestToCheckPatient);
+
+    $request->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+    $request->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+    $request->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+    $request->bindValue(':phone', $this->phone, PDO::PARAM_STR);
+    $request->bindValue(':mail', $this->mail, PDO::PARAM_STR);
+
+    $request->execute();
+
+    return $request->fetch(PDO::FETCH_OBJ);
+  }
+
 }

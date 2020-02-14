@@ -36,7 +36,7 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
                   <p>Votre compte a été enregistré avec succès</p>
                 </div>
                 <?php }else{ 
-                  if(isset($insertError)){ ?><div class="feedback valid-feedback"><?= $insertError ?></div><?php }
+                  if(isset($insertError)){ ?><div class="feedback valid-feedback patientExist"><?= $insertError ?></div><?php }
                 ?>
                   <form action="#" method="POST">
                   <fieldset>
