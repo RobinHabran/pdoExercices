@@ -23,12 +23,14 @@ include_once 'php/models/patients.php';
     <?php include 'navbar.php'; ?>
     <header class="masthead" id="page-top">
       <div class="container h-100">
-        <div class="row h-100 justify-content-center text-center">
+        <div class="row h-100 justify-content-center text-center ">
           <div class="col-lg-10 align-self-end">
             <h1 class="text-uppercase text-white font-weight-bold">H - Local Hostpital</h1>
             <hr class="divider my-4">
           </div>
-          <div class="col-lg-4 align-self-baseline">
+        </div>
+        <div class="row align-self-end link-row">
+          <div class="col-lg-4 offset-lg-2 align-self-baseline">
             <p class="text-white font-weight-light mb-5">Vous êtes nouveau sur la plateforme?</p>
             <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez un patient</a>
           </div>
@@ -37,6 +39,17 @@ include_once 'php/models/patients.php';
             <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="liste-patients.php">apercu des patients</a>
           </div>
         </div>
+        <div class="row align-self-end link-row">
+          <div class="col-lg-4 offset-lg-2 align-self-baseline">
+            <p class="text-white font-weight-light mb-5">test 1</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">test</a>
+          </div>
+          <div class="col-lg-4 align-self-baseline">
+            <p class="text-white font-weight-light mb-5">test 2</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="liste-patients.php">test</a>
+          </div>
+        </div>
+        
       </div>
     </header>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

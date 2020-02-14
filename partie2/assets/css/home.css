@@ -40,7 +40,7 @@ header.masthead {
 #navbarResponsive a:hover {
   border-bottom: 1px solid white;
 }
-#btnScrollRegister{
+#btnScrollRegister, #btnBack{
   padding: 10px 25px;
   border: 2px solid #28a74580;
   border-radius: 20px;
@@ -102,10 +102,10 @@ label{
   font-weight: bold;
   text-align: center;
 }
-#h1-list-patient{
-  margin: 50px 0;
+h1{
+  margin: 150px 0 100px 0;
 }
-#h2-list-patient{
+h2{
   color: white;
   margin: 100px 0 20px 0;
   text-align: start;
@@ -121,4 +121,7 @@ td, th{
 th{
   background-color: #3e6e4b;
   font-weight: bold;
+}
+.link-row{
+  padding: 30px 0 150px 0;
 }

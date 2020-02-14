@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of clients
  *
@@ -79,6 +80,31 @@ class patient {
     $request->execute();
 
     return $request->fetch(PDO::FETCH_OBJ);
+  }
+
+  public function getPatientProfile() {
+    $request = 'SELECT `id`, `firstname`, `lastname`, DATE_FORMAT(`birthdate`,\'%d/%m/%y\') AS `birthdate`, `phone`, `mail` '
+            . 'FROM `patients` '
+            . 'WHERE `id`= :id';
+    //marquer nominatif (:nom_attribut) => permet de prévenir les injections sql
+    $statement = $this->dataBase->prepare($request);
+    //j'attribue au marqueur nominatif id la valeur de l'attribut de mon objet id
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    //PDO::PARAM_INT = on donne le type de valeur en paramètre (date c'est en string, seule exception),
+    //on type notre valeur, on veut un INT car on récupère l'id, qui est unique... SECURITE
+    $statement->execute();
+    // je teste ma requête, je teste que je reçois mes données via ma méthode puis affichage
+    return $statement->fetch(PDO::FETCH_OBJ);
+  }
+
+  public function checkIfPatientExistsById() {
+    $request = 'SELECT COUNT(`id`) AS `exists` '
+            . 'FROM `patients` '
+            . 'WHERE `id` = :id';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_OBJ);
   }
 
 }

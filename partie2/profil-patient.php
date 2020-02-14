@@ -1,6 +1,6 @@
 <?php
 include_once 'php/models/patients.php';
-include_once 'php/controllers/listePatientCtrl.php';
+include_once 'php/controllers/profilPatientCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -28,38 +28,41 @@ include_once 'php/controllers/listePatientCtrl.php';
     <header class="masthead" id="page-top">
       <div class="container ">
         <div class="row h-100 justify-content-center text-center">
-          <div class="col-lg-10 align-self-end">
+          <div class="col-lg-8 align-self-end">
             <h1 id="h1-list-patient" class="text-uppercase text-white font-weight-bold">H - Local Hostpital</h1>
             <hr class="divider my-4">
           </div>
-          <div class="col-lg-12 align-self-baseline">
+          <div class="col-lg-8 align-self-baseline">
             <p class="text-white font-weight-light mb-5">Vous souhaitez vous enregistrer?</p>
             <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez un patient</a>
           </div>
         </div>
       </div>
-      <div class="container">
-        <div class="row h-100 justify-content-center">
-          <div class="col-lg-10 align-self-baseline justify-content-center table-responsive">
-            <h2 id="h2-list-patient"><strong>Liste des patients</strong></h2>
-            <p class="text-white font-weight-light mb-5 text-left">Retrouvez la liste des patients</p>
-            <table class="tableaux table-striped">
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 align-self-baseline justify-content-center table-responsive">
+            <h2 id="h2-list-patient"><strong>Informations</strong></h2>
+            <p class="text-white font-weight-light mb-5 text-left">Retrouvez les informations d'un patient</p>
+          </div>
+          <div class="col-lg-8 align-self-baseline justify-content-center table-responsive">
+            <a class="btn-xl js-scroll-trigger mr-auto" id="btnBack" href="liste-patients.php">retour à la liste</a>
+            <table class="tableaux table-striped" id="infoPatienTable">
               <tr>
+                <th>id</th>
                 <th>Nom </th> 
                 <th>Prénom </th> 
                 <th>Date de naissance </th>  
-                <th>Infos</th>
+                <th>Tél.</th>
+                <th>E-mail</th>
               </tr>
-              <?php
-              foreach ($patientsList as $patient) {
-                ?>
-                <tr>
-                  <td><?= $patient->lastname ?></td>
-                  <td><?= $patient->firstname ?></td>
-                  <td><?= $patient->birthdate ?></td>
-                  <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
-                </tr>
-              <?php } ?>
+              <tr>
+                <td><?= $patientProfile->id ?></td>
+                <td><?= $patientProfile->lastname ?></td>
+                <td><?= $patientProfile->firstname ?></td>
+                <td><?= $patientProfile->birthdate ?></td>
+                <td><?= $patientProfile->phone ?></td>
+                <td><?= $patientProfile->mail ?></td>
+              </tr>
             </table>
           </div>
         </div>
