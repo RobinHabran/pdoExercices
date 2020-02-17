@@ -107,4 +107,18 @@ class patient {
     return $statement->fetch(PDO::FETCH_OBJ);
   }
 
+  public function updateProfilePatient() {
+    $request = 'UPDATE `patients` '
+            . 'SET `lastname` = :lastname, `firstname` = :firstname, `birthdate` = :birthdate, `phone` = :phone, `mail` = :mail '
+            . 'WHERE `id` = :id';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+    $statement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+    $statement->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
+    $statement->bindValue(':phone', $this->phone, PDO::PARAM_STR);
+    $statement->bindValue(':mail', $this->mail, PDO::PARAM_STR);
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    return $statement->execute();
+  }
+
 }
