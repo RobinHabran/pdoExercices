@@ -1,6 +1,8 @@
 <?php
 include_once 'php/models/patients.php';
+include_once 'php/checkForm.php';
 include_once 'php/controllers/profilPatientCtrl.php';
+
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -88,7 +90,7 @@ include_once 'php/controllers/profilPatientCtrl.php';
                 <!--  birthdate  -->
                 <div class="form-group">
                   <label for="birthdate">Date de naissance</label>
-                  <input type="date" class="form-control <?= (empty($formError['birthdate']) ? 'is-valid' : 'is-invalid') ?>" name="birthdate" id="birthdate" value="<?= (empty($_POST['birthdate']) ? $patientProfile->birthdate : $_POST['birthdate']) ?>">
+                  <input type="date" class="form-control <?= (empty($formError['birthdate']) ? 'is-valid' : 'is-invalid') ?>" name="birthdate" id="birthdate" value="<?= (empty($_POST['birthdate']) ? $patientProfile->birthdateSql : $_POST['birthdate']) ?>">
                   <?php if (isset($_POST['registerPatient']) && !empty($_POST['birthdate']) && empty($formError['birthdate'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                   <?php if (isset($formError['birthdate'])) { ?><div class="feedback invalid-feedback"><?= $formError['birthdate'] ?></div><?php } ?>
                 </div>
@@ -108,7 +110,7 @@ include_once 'php/controllers/profilPatientCtrl.php';
                   <small id="mailHelp" class="form-text">Vous seul aurez vu de votre e-mail.</small>
                 </div>
                 <div class="d-flex align-items-end">
-                  <input type="submit" class="btn btn-success" id="updatePatient" name="registerPatient" py-5 value="valider" />
+                  <input type="submit" class="btn btn-success" id="updatePatient" name="updatePatient" py-5 value="valider" />
                 </div>
               </fieldset>
             </form>

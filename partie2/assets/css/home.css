@@ -14,6 +14,8 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff;
+  min-height: 99vh;
+  min-width: 99vw;
 }
 header.masthead {
   min-height: calc(100vh - 78px);

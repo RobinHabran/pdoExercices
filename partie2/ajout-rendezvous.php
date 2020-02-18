@@ -1,91 +1,109 @@
 <?php
-require_once 'models/patients.php';
-require_once 'models/appointments.php';
-require_once 'controllers/ajout-rendezvousCtrl.php';
+include_once 'php/models/patients.php';
+include_once 'php/checkForm.php';
+include_once 'php/controllers/profilPatientCtrl.php';
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/chosen.min.css"/>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-        <link rel="stylesheet" href="/assets/css/style.css" />
-        <title>Hospital E2N|Information Patient</title>
-    </head>
-    <body>
-        <div class="container-fluid">
-            <?php include_once 'navbar.php'; ?>
-            <div class="row">
-                <div class="col-md-2 rectBlue"></div>
-                <div class="col-md-8">
-                    <h1>Information du patient</h1>
-                    <form action="ajout-rendezvous.php" method="POST">
-                        <div class="row d-flex justify-content-center">
-                            <select name="getPatientId" class="col-md-5" id="getPatientId">
-                                <option disabled <?php
-                                if (empty($_POST['getPatientId'])) {
-                                    echo 'selected';
-                                }
-                                ?>>Veulliez séléctionné un patient</option>
-                                        <?php foreach ($patientList as $patientInfo) { ?>
-                                    <option value="<?= $patientInfo->id ?>" <?php
-                                    if (!empty($_POST['getPatientId']) && $_POST['getPatientId'] == $patientInfo->id) {
-                                        echo 'selected';
-                                    }
-                                    ?>><?= $patientInfo->lastname . ' ' . $patientInfo->firstname . ' ' . $patientInfo->birthdate ?></option>
+<!doctype html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"/>
+    <!-- Icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- import Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <?php if (isset($formErrorAddRDV['getPatientId'])) { ?>
-                            <div class="row d-flex justify-content-center mt-2">
-                                <p class="text-danger"><?= $formErrorAddRDV['getPatientId'] ?></p>
-                            </div>
-                        <?php } ?>
-                        <div class="row d-flex justify-content-center mt-5">
-                            <label for="rdvDate" class="col-md-3 text-right">Date du RDV:</label>
-                            <input type="date" min="<?= $thisYear . '-' . $thisMonth . '-' . $thisDay ?>" id="rdvDate" name="rdvDate" class="col-md-4" value="<?php
-                            if (isset($formErrorAddRDV)) {
-                                echo $_POST['rdvDate'];
-                            }
-                            ?>" />
-                        </div>
-                        <?php if (isset($formErrorAddRDV['rdvDate'])) { ?>
-                            <div class="row d-flex justify-content-center mt-2">
-                                <p class="text-danger"><?= $formErrorAddRDV['rdvDate'] ?></p>
-                            </div>
-                        <?php } ?>
-                        <div class="row d-flex justify-content-center mt-5">
-                            <label for="rdvHour" class="col-md-3 text-right">Heure du RDV :</label>
-                            <input type="time" max="19:00" min="08:00" step=900 id="rdvHour" name="rdvHour" class="col-md-4" value="<?php
-                            if (isset($formErrorAddRDV)) {
-                                echo $_POST['rdvHour'];
-                            }
-                            ?>"  />
-                        </div>
-                        <?php if (isset($formErrorAddRDV['rdvHour'])) { ?>
-                            <div class="row d-flex justify-content-center mt-2">
-                                <p class="text-danger"><?= $formErrorAddRDV['rdvHour'] ?></p>
-                            </div>
-                        <?php } ?>
-                        <div class="row d-flex justify-content-center mt-5">
-                            <input type="submit" name="submitInfoRdv" id="submitInfoRdv"  value="Ajouter un RDV" class="btn btn-success cold-md-3"/>
-                        </div>
-                    </form>
-                    <?php if (isset($messageEndInfo)) { ?>
-                        <div class="row d-flex justify-content-center mt-5">
-                            <p class="<?= $classMessageEndInfo ?>"><?= $messageEndInfo ?></p>
-                        </div>
-                    <?php } ?>
-                </div>
-                <div class="col-md-2 rectBlue"></div>
-            </div>
+    <!-- css du projet -->
+    <link rel="stylesheet" href="assets/css/home.css">
+    <!-- js du projet -->
+    <link rel="stylesheet" href="assets/js/home.js">
+    <script src="https://kit.fontawesome.com/47162c995d.js" crossorigin="anonymous"></script>
+    <!-- titre d'onglet -->
+    <title>H - Cabinet Médical</title>
+  </head>
+  <body class="text-center" cz-shortcut-listen="true">
+    <?php include 'navbar.php'; ?>
+    <header class="masthead" id="page-top">
+      <div class="container ">
+        <div class="row h-100 justify-content-center text-center">
+          <div class="col-lg-8 align-self-end">
+            <h1 id="h1-list-patient" class="text-uppercase text-white font-weight-bold">H - Local Hostpital</h1>
+            <hr class="divider my-4">
+          </div>
+          <div class="col-lg-8 align-self-baseline">
+            <p class="text-white font-weight-light mb-5">Vous souhaitez vous enregistrer?</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez un patient</a>
+          </div>
         </div>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <script src="assets/js/chosen.jquery.min.js"></script>
-        <script src="assets/js/scipt.js"></script>
-    </body>
+      </div>
+      <div class="container-fluid">
+        <div class="row h-100 justify-content-center">
+          <div class="col-lg-4 align-self-baseline justify-content-center">
+            <form action="#" method="POST">
+              <fieldset>
+                <legend>Prenez rendez-vous</legend>
+                <!--  select patient  -->
+                <div class="form-group">
+                  <select name="getPatientId" class="col-md-5" id="getPatientId">
+                    <option disabled <?php
+                    if (empty($_POST['getPatientId'])) {
+                      echo 'selected';
+                    }
+                    ?>>Veulliez séléctionné un patient</option>
+                            <?php foreach ($patientList as $patient) { ?>
+                      <option value="<?= $patient->id ?>" <?php
+                      if (!empty($_POST['getPatientId']) && $_POST['getPatientId'] == $patient->id) {
+                        echo 'selected';
+                      }
+                      ?>><?= $patient->lastname ?> <?= $patient->firstname ?> <?= $patient->birthdate ?></option>
+
+                    <?php } ?>
+                  </select>
+                </div>
+                <!--  firtname  -->
+                <div class="form-group">
+                  <label for="firstname">Prénom</label>
+                  <input type="text" class="form-control <?= (empty($formError['firstname']) ? 'is-valid' : 'is-invalid') ?>" name="firstname" id="firstname" placeholder="Jean" value="<?= (empty($_POST['firstname']) ? $patientProfile->firstname : $_POST['firstname']) ?>">
+                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['firstname'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['firstname'])) { ?><div class="feedback invalid-feedback"><?= $formError['firstname'] ?></div><?php } ?>
+                </div>
+                <!--  birthdate  -->
+                <div class="form-group">
+                  <label for="birthdate">Date de naissance</label>
+                  <input type="date" class="form-control <?= (empty($formError['birthdate']) ? 'is-valid' : 'is-invalid') ?>" name="birthdate" id="birthdate" value="<?= (empty($_POST['birthdate']) ? $patientProfile->birthdateSql : $_POST['birthdate']) ?>">
+                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['birthdate']) && empty($formError['birthdate'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['birthdate'])) { ?><div class="feedback invalid-feedback"><?= $formError['birthdate'] ?></div><?php } ?>
+                </div>
+                <!--  numéro de téléphone  -->
+                <div class="form-group">
+                  <label for="phone">Tél.</label>
+                  <input type="text" class="form-control <?= (empty($formError['phone']) ? 'is-valid' : (isset($_POST['phone']) ? 'is-invalid' : '')) ?>" name="phone" id="phone" placeholder="06 25 63 49 75" value="<?= (empty($_POST['phone']) ? $patientProfile->phone : $_POST['phone']) ?>">
+                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['phone']) && empty($formError['phone'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['phone'])) { ?><div class="feedback invalid-feedback"><?= $formError['phone'] ?></div><?php } ?>
+                </div>
+                <!--  e-mail  -->
+                <div class="form-group">
+                  <label for="mail">E-mail</label>
+                  <input type="mail" class="form-control <?= (empty($formError['mail']) ? 'is-valid' : 'is-invalid') ?>" name="mail" id="mail" aria-describedby="mailHelp" placeholder="jb.dupond@gmail.com" value="<?= (empty($_POST['mail']) ? $patientProfile->mail : $_POST['mail']) ?>">
+                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['mail']) && empty($formError['mail'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['mail'])) { ?><div class="feedback invalid-feedback"><?= $formError['mail'] ?></div><?php } ?>
+                  <small id="mailHelp" class="form-text">Vous seul aurez vu de votre e-mail.</small>
+                </div>
+                <div class="d-flex align-items-end">
+                  <input type="submit" class="btn btn-success" id="updatePatient" name="updatePatient" py-5 value="valider" />
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
 </html>

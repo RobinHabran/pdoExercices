@@ -41,12 +41,12 @@ include_once 'php/models/patients.php';
         </div>
         <div class="row align-self-end link-row">
           <div class="col-lg-4 offset-lg-2 align-self-baseline">
-            <p class="text-white font-weight-light mb-5">test 1</p>
-            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">test</a>
+            <p class="text-white font-weight-light mb-5">Prenez rendez-vous avec votre médecin</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Prendre rendez-vous</a>
           </div>
           <div class="col-lg-4 align-self-baseline">
-            <p class="text-white font-weight-light mb-5">test 2</p>
-            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="liste-patients.php">test</a>
+            <p class="text-white font-weight-light mb-5">Retrouvez la liste des rendez-vous</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="liste-patients.php">Apercu des rendez-vous</a>
           </div>
         </div>
         

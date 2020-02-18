@@ -52,7 +52,7 @@ class patient {
   }
 
   public function getPatientsList() {
-    $request = 'SELECT `id`, `lastname`, `firstname`, `birthdate` '
+    $request = 'SELECT `id`, `lastname`, `firstname`, DATE_FORMAT(`birthdate`,\'%d/%m/%Y\') AS `birthdate` '
             . 'FROM `patients`';
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
@@ -83,7 +83,7 @@ class patient {
   }
 
   public function getPatientProfile() {
-    $request = 'SELECT `id`, `firstname`, `lastname`, DATE_FORMAT(`birthdate`,\'%d/%m/%y\') AS `birthdate`, `phone`, `mail` '
+    $request = 'SELECT `id`, `firstname`, `lastname`,`birthdate` AS `birthdateSql`, DATE_FORMAT(`birthdate`,\'%d/%m/%Y\') AS `birthdate`, `phone`, `mail` '
             . 'FROM `patients` '
             . 'WHERE `id`= :id';
     //marquer nominatif (:nom_attribut) => permet de prévenir les injections sql
