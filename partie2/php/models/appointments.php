@@ -20,7 +20,7 @@ class appointments {
     }
   }
 
-  public function registerNewAppoitment() {
+  public function registerNewAppointment() {
     // requete sql
     // bug sur la méthode : ' corriger
     $insertPatientSql = 'INSERT INTO hospitalE2N.appoitments
@@ -29,26 +29,28 @@ class appointments {
                          (UPPER(:dateHour),:idPatients)';
     // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
     $statement = $this->dataBase->prepare($insertPatientSql);
-    /* bindValue() vérifie la validité des parametres
-     * bindValue($par1, $par2, $par3)
-     * $par1 = marqueur nominatif;
-     * $par2 = attribut de l'objet correspondant
-     * $par3 = type de l'attribut
-     */
-    $statement->bindValue(':dateHour', $this->lastname, PDO::PARAM_STR);
-    $statement->bindValue(':idPatients', $this->firstname, PDO::PARAM_STR);
+    $statement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
+    $statement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_IN);
     // la méthode 'fetchAll(PDO::FETCH_OBJ)' retourne un tableau d'objet des resultats de la requete sql
     return $statement->execute();
   }
 
-  public function getPatientsList() {
-    $request = 'SELECT `dateHour` AS `date`, `dateHour` AS `hour`, `firstname` '
-            . 'FROM `appoitmets`';
+  public function getAppointmentList() {
+    $request = 'SELECT `dateHour` AS `date`, `dateHour` AS `hour`, `idPatients` '
+            . 'FROM `appointments`';
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }
 
-  public function makeAnAppoitment() {
-    
+  public function checkIfAppointmentExistsById() {
+    $request = 'SELECT DATE_FORMAT(`appointments`.`dateHour`, \'%Y-%m-%d\') AS `sqlDate`, DATE_FORMAT(`appointments`.`dateHour`, \'%d/%m/%Y\') AS `frenchDate`, DATE_FORMAT(`appointments`.`dateHour`, \'%H:%i\') AS `hour`, `patients`.`lastname`, `patients`.`firstname`, `patients`.`phone`, `patients`.`mail`, DATE_FORMAT(`patients`.`birthdate`, \'%d/%m/%Y\') AS `frenchBirthdate` '
+            . ' FROM `appointments` '
+            . ' INNER JOIN `patients` ON `appointments`.`idPatients` = `patients`.`id` '
+            . ' WHERE `appointments`.`id` = :id';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_OBJ);
   }
+
 }

@@ -8,6 +8,7 @@ class checkForm {
   
   private $name = '/^[a-zéèà \-]+$/i';
   private $dateSql = '/^((?:19|20)(?:[\d]{2}))-((?:[0][\d])|(?:[1][0-2]))-((?:(0|1|2)[\d])|(?:[3][0-1]))$/';
+  private $hourAppointments = '/^(([0][89])|([1][0-9]))[:]([0-4][05])$/';
   private $phone = '/^([0]|[\+][3]{2})([\s]?[\d][\s]?){9}$/i';
   private $mail = '/^(.*)([@]{1})(.*)([.]{1})([a-z]{2,})$/i';
   public $postName = '';
@@ -42,8 +43,10 @@ class checkForm {
         $this->valueType = 'name';
       }elseif($this->postName == 'lastname'){
         $this->valueType = 'name';
-      }elseif($this->postName == 'birthdate'){
+      }elseif($this->postName == 'birthdate' || $this->postName == 'date'){
         $this->valueType = 'date';
+      }elseif($this->postName == 'hourAppointments'){
+        $this->valueType = 'hourAppointments';
       }elseif($this->postName == 'phone'){
         $this->valueType = 'phone';
       }elseif($this->postName == 'mail'){

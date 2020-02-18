@@ -1,6 +1,7 @@
 <?php
-include_once 'php/controllers/ajoutPatientCtrl.php';
 include_once 'php/models/patients.php';
+include_once 'php/controllers/ajoutPatientCtrl.php';
+include_once 'php/controllers/appointmentsCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -41,12 +42,12 @@ include_once 'php/models/patients.php';
         </div>
         <div class="row align-self-end link-row">
           <div class="col-lg-4 offset-lg-2 align-self-baseline">
-            <p class="text-white font-weight-light mb-5">Prenez rendez-vous avec votre médecin</p>
-            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Prendre rendez-vous</a>
+            <p class="text-white font-weight-light mb-5">Enregistrez un rendez-vous</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutRendezvous.php">Prendre rendez-vous</a>
           </div>
           <div class="col-lg-4 align-self-baseline">
             <p class="text-white font-weight-light mb-5">Retrouvez la liste des rendez-vous</p>
-            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="liste-patients.php">Apercu des rendez-vous</a>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="liste-rendezvous.php">Apercu des rendez-vous</a>
           </div>
         </div>
         

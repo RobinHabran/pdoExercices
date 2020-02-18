@@ -1,7 +1,9 @@
 <?php
 include_once 'php/models/patients.php';
+include_once 'php/models/appointments.php';
 include_once 'php/checkForm.php';
-include_once 'php/controllers/profilPatientCtrl.php';
+include_once 'php/controllers/listePatientCtrl.php';
+include_once 'php/controllers/appointmentsCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -41,19 +43,19 @@ include_once 'php/controllers/profilPatientCtrl.php';
       </div>
       <div class="container-fluid">
         <div class="row h-100 justify-content-center">
-          <div class="col-lg-4 align-self-baseline justify-content-center">
+          <div class="col-lg-4  justify-content-center">
             <form action="#" method="POST">
               <fieldset>
-                <legend>Prenez rendez-vous</legend>
+                <legend class="">Prenez rendez-vous</legend>
                 <!--  select patient  -->
                 <div class="form-group">
-                  <select name="getPatientId" class="col-md-5" id="getPatientId">
+                  <select name="getPatientId" class="col-md-12" id="getPatientId">
                     <option disabled <?php
                     if (empty($_POST['getPatientId'])) {
                       echo 'selected';
                     }
-                    ?>>Veulliez séléctionné un patient</option>
-                            <?php foreach ($patientList as $patient) { ?>
+                    ?>>Veuillez séléctionner un patient</option>
+                            <?php foreach ($patientsList as $patient) { ?>
                       <option value="<?= $patient->id ?>" <?php
                       if (!empty($_POST['getPatientId']) && $_POST['getPatientId'] == $patient->id) {
                         echo 'selected';
@@ -65,35 +67,20 @@ include_once 'php/controllers/profilPatientCtrl.php';
                 </div>
                 <!--  firtname  -->
                 <div class="form-group">
-                  <label for="firstname">Prénom</label>
-                  <input type="text" class="form-control <?= (empty($formError['firstname']) ? 'is-valid' : 'is-invalid') ?>" name="firstname" id="firstname" placeholder="Jean" value="<?= (empty($_POST['firstname']) ? $patientProfile->firstname : $_POST['firstname']) ?>">
-                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['firstname'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                  <?php if (isset($formError['firstname'])) { ?><div class="feedback invalid-feedback"><?= $formError['firstname'] ?></div><?php } ?>
+                  <label for="date">Date</label>
+                  <input type="date" class="form-control <?= (empty($formError['date']) ? 'is-valid' : 'is-invalid') ?>" name="date" id="date" value="<?= (!empty($_POST['date']) ? $_POST['date'] : '') ?>">
+                  <?php if (isset($_POST['registerAppointments']) && !empty($_POST['date'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['date'])) { ?><div class="feedback invalid-feedback"><?= $formError['date'] ?></div><?php } ?>
                 </div>
-                <!--  birthdate  -->
+                <!--  hour  -->
                 <div class="form-group">
-                  <label for="birthdate">Date de naissance</label>
-                  <input type="date" class="form-control <?= (empty($formError['birthdate']) ? 'is-valid' : 'is-invalid') ?>" name="birthdate" id="birthdate" value="<?= (empty($_POST['birthdate']) ? $patientProfile->birthdateSql : $_POST['birthdate']) ?>">
-                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['birthdate']) && empty($formError['birthdate'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                  <?php if (isset($formError['birthdate'])) { ?><div class="feedback invalid-feedback"><?= $formError['birthdate'] ?></div><?php } ?>
-                </div>
-                <!--  numéro de téléphone  -->
-                <div class="form-group">
-                  <label for="phone">Tél.</label>
-                  <input type="text" class="form-control <?= (empty($formError['phone']) ? 'is-valid' : (isset($_POST['phone']) ? 'is-invalid' : '')) ?>" name="phone" id="phone" placeholder="06 25 63 49 75" value="<?= (empty($_POST['phone']) ? $patientProfile->phone : $_POST['phone']) ?>">
-                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['phone']) && empty($formError['phone'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                  <?php if (isset($formError['phone'])) { ?><div class="feedback invalid-feedback"><?= $formError['phone'] ?></div><?php } ?>
-                </div>
-                <!--  e-mail  -->
-                <div class="form-group">
-                  <label for="mail">E-mail</label>
-                  <input type="mail" class="form-control <?= (empty($formError['mail']) ? 'is-valid' : 'is-invalid') ?>" name="mail" id="mail" aria-describedby="mailHelp" placeholder="jb.dupond@gmail.com" value="<?= (empty($_POST['mail']) ? $patientProfile->mail : $_POST['mail']) ?>">
-                  <?php if (isset($_POST['registerPatient']) && !empty($_POST['mail']) && empty($formError['mail'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                  <?php if (isset($formError['mail'])) { ?><div class="feedback invalid-feedback"><?= $formError['mail'] ?></div><?php } ?>
-                  <small id="mailHelp" class="form-text">Vous seul aurez vu de votre e-mail.</small>
+                  <label for="hour">Heure</label>
+                  <input type="time" max="19:00" min="08:00" step=900 class="form-control <?= (empty($formError['hour']) ? 'is-valid' : 'is-invalid') ?>" name="hour" id="hour" value="<?= (!empty($_POST['hour']) ? $_POST['hour'] : '' )?>">
+                  <?php if (isset($_POST['registerAppointments']) && !empty($_POST['hour']) && empty($formError['hour'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['hour'])) { ?><div class="feedback invalid-feedback"><?= $formError['hour'] ?></div><?php } ?>
                 </div>
                 <div class="d-flex align-items-end">
-                  <input type="submit" class="btn btn-success" id="updatePatient" name="updatePatient" py-5 value="valider" />
+                  <input type="submit" class="btn btn-success" id="registerAppointments" name="registerAppointments" py-5 value="valider" />
                 </div>
               </fieldset>
             </form>
