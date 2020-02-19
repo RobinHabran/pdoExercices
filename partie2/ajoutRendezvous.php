@@ -63,7 +63,7 @@ include_once 'php/controllers/appointmentsCtrl.php';
                         echo 'selected';
                       }
                       ?>><?= $patient->lastname ?> <?= $patient->firstname ?> <?= $patient->birthdate ?></option>
-                      <?php if (isset($formError['patientId'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
+                      <?php if (isset($formError['patientx'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
                     <?php } ?>
                   </select>
                 </div>

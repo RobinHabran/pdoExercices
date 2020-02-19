@@ -28,35 +28,20 @@ if (isset($_POST['registerAppointments'])) {
     $formError[$regexAppointmentHour->postName] = $regexAppointmentHour->error;
   } else {
     // assignation de la valeur de l'attribut de l'objet de la regex dans l'objet patient
-    $appointment->heure = $regexAppointmentHour->value;
-  }
-  
-  // vérification de validité du patient rentrée par l'user
-  $regexPatient->postName = 'id';
-  (!empty($_POST['patientId']) ? $regexPatient->value = $_POST['patientId'] : '');
-  if (!$regexPatient->checkPostValue()) {
-    $formError[$regexPatient->postName] = $regexPatient->error;
-  } else {
-    // assignation de la valeur de l'attribut de l'objet de la regex dans l'objet patient
-    $patient->id = $regexPatient->value;
+    $appointment->hour = $regexAppointmentHour->value;
   }
 
-  if (!empty($_POST['patientId'])) {
-    foreach ($_POST['patientId'] as $postName => $value) {
-      // j'assigne ma valeur $postname correspondant au name de l'input à l'attribut $regex->postName
-      $regexPatient->postName = $postName;
-      // j'assigne ma valeur $value correspondant au name de l'input à l'attribut $regex->postName
-      $regexPatient->value = $value;
-      // test si la valeur respecte la syntaxe de la regex
-      if (!$regexPatient->checkPostValue()) {
-        // assignation au array des erreurs l'erreur dédiée stockée dans l'objet regex
-        $formError[$postName] = $regexPatient->error;
-      } else {
-        // assignation de la valeur de l'attribut de l'objet de la regex dans l'objet patient
-        $patient->$postName = $regexPatient->value;
-      }
-    }
+  // vérification de validité du patient rentrée par l'user
+  $regexPatient->postName = 'patientId';
+  (!empty($_POST['patientId']) ? $regexPatient->value = $_POST['patientId'] : '');
+  if (!$regexPatient->checkPostValue()) {
+    // assignation au array des erreurs l'erreur dédiée stockée dans l'objet regex
+    $formError['patient'] = $regexPatient->error;
+  } else {
+    // assignation de la valeur de l'attribut de l'objet de la regex dans l'objet patient
+    $patient->value = $regexPatient->value;
   }
+
   // insertion des données
   // si le tableau d'erreur est vide alors il n'y a pas d'erreur dédectée dans la valeur des input
   if (count($formError) == 0) {

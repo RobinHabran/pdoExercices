@@ -52,7 +52,7 @@ class checkForm {
       $this->valueType = 'phone';
     } elseif ($this->postName == 'mail') {
       $this->valueType = 'mail';
-    }elseif ($this->postName == 'id') {
+    }elseif ($this->postName == 'id' || $this->postName == 'patientId') {
       $this->valueType = 'id';
     }
     return true;
@@ -68,13 +68,13 @@ class checkForm {
       $regex = $this->name;
     } elseif ($this->valueType == 'date') {
       $regex = $this->dateSql;
-    } elseif ($this->postName == 'hourAppointments') {
+    } elseif ($this->valueType == 'hourAppointments') {
       $regex = $this->hourAppointments;
     } elseif ($this->valueType == 'phone') {
       $regex = $this->phone;
     } elseif ($this->valueType == 'mail') {
       $regex = $this->mail;
-    }elseif ($this->postName == 'id') {
+    }elseif ($this->valueType == 'id') {
       $regex = $this->number;
     }
     return $regex;
@@ -141,7 +141,8 @@ class checkForm {
       // cas du email
       elseif ($this->postName == 'mail') {
         $this->error = 'Veillez renseigner votre e-mail';
-      }elseif($this->postName == 'id'){
+      // cas de l'id
+      }elseif($this->postName == 'id' || $this->postName == 'patientId'){
         $this->error = 'msgPerso';
       }
     }

@@ -7,7 +7,7 @@
  */
 class appointments {
 
-  public $id;
+  public $id = 0;
   public $dateHour = '1900-12-31 12:30:00';
   public $date = '1900-12-31';
   public $hour = '12:30:00';
@@ -33,13 +33,11 @@ class appointments {
   }
 
   public function registerNewAppointment() {
-    $this->concatenation();
+    $this->dateHour = $this->concatenation();
     // requete sql
     // bug sur la méthode : ' corriger
-    $insertPatientSql = 'INSERT INTO hospitalE2N.appoitments
-                         (`dateHour`,`idPatients`)
-                         VALUES
-                         (UPPER(:dateHour),:idPatients)';
+    $insertPatientSql = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) '
+                      . ' VALUES (:dateHour, :idPatients)';
     // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
     $statement = $this->dataBase->prepare($insertPatientSql);
     $statement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
@@ -49,7 +47,7 @@ class appointments {
   }
 
   public function getAppointmentList() {
-    $request = 'SELECT `dateHour` AS `date`, `dateHour` AS `hour`, `idPatients` '
+    $request = 'SELECT DATE_FORMAT(`dateHour`,\'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`,\'%Hh%i\') AS `hour`, `idPatients` '
             . 'FROM `appointments`';
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
