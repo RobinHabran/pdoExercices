@@ -35,9 +35,6 @@ if (isset($_POST['registerPatient'])){
       // alors j'appel la méthode qui envoi les valeur dans la bd
       $patient->registerNewPatient();
     }else{
-      /**
-       * Il ne rentre pas dans le if !!
-       */
       // cas où le patient existe déjà
       $insertError = 'Vous avez déja un compte sur notre plateforme';
     }

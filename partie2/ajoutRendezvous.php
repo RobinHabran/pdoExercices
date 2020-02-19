@@ -1,7 +1,7 @@
 <?php
 include_once 'php/models/patients.php';
 include_once 'php/models/appointments.php';
-include_once 'php/checkForm.php';
+include_once 'php/models/checkForm.php';
 include_once 'php/controllers/listePatientCtrl.php';
 include_once 'php/controllers/appointmentsCtrl.php';
 ?>
@@ -49,19 +49,21 @@ include_once 'php/controllers/appointmentsCtrl.php';
                 <legend class="">Prenez rendez-vous</legend>
                 <!--  select patient  -->
                 <div class="form-group">
-                  <select name="getPatientId" class="col-md-12" id="getPatientId">
-                    <option disabled <?php
-                    if (empty($_POST['getPatientId'])) {
-                      echo 'selected';
-                    }
-                    ?>>Veuillez séléctionner un patient</option>
-                            <?php foreach ($patientsList as $patient) { ?>
-                      <option value="<?= $patient->id ?>" <?php
-                      if (!empty($_POST['getPatientId']) && $_POST['getPatientId'] == $patient->id) {
+                  <select name="patientId" class="col-md-12" id="patientId">
+                    <option disabled
+                      <?php 
+                      if (empty($_POST['patientId'])) {
+                        echo 'selected';
+                      }
+                      ?>>Veuillez séléctionner un patient</option>
+                      <?php foreach ($patientsList as $patient) { ?>
+                      <option value="<?= $patient->id ?>" 
+                      <?php
+                      if (!empty($_POST['patientId']) && $_POST['patientId'] == $patient->id) {
                         echo 'selected';
                       }
                       ?>><?= $patient->lastname ?> <?= $patient->firstname ?> <?= $patient->birthdate ?></option>
-
+                      <?php if (isset($formError['patientId'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
                     <?php } ?>
                   </select>
                 </div>
@@ -72,12 +74,12 @@ include_once 'php/controllers/appointmentsCtrl.php';
                   <?php if (isset($_POST['registerAppointments']) && !empty($_POST['date'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                   <?php if (isset($formError['date'])) { ?><div class="feedback invalid-feedback"><?= $formError['date'] ?></div><?php } ?>
                 </div>
-                <!--  hour  -->
+                <!--  hourAppointments  -->
                 <div class="form-group">
-                  <label for="hour">Heure</label>
-                  <input type="time" max="19:00" min="08:00" step=900 class="form-control <?= (empty($formError['hour']) ? 'is-valid' : 'is-invalid') ?>" name="hour" id="hour" value="<?= (!empty($_POST['hour']) ? $_POST['hour'] : '' )?>">
-                  <?php if (isset($_POST['registerAppointments']) && !empty($_POST['hour']) && empty($formError['hour'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                  <?php if (isset($formError['hour'])) { ?><div class="feedback invalid-feedback"><?= $formError['hour'] ?></div><?php } ?>
+                  <label for="hourAppointments">Heure</label>
+                  <input type="time" max="19:00" min="08:00" step=900 class="form-control <?= (empty($formError['hourAppointments']) ? 'is-valid' : 'is-invalid') ?>" name="hourAppointments" id="hourAppointments" value="<?= (!empty($_POST['hourAppointments']) ? $_POST['hourAppointments'] : '' ) ?>">
+                  <?php if (isset($_POST['registerAppointments']) && !empty($_POST['hourAppointments']) && empty($formError['hourAppointments'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                  <?php if (isset($formError['hourAppointments'])) { ?><div class="feedback invalid-feedback"><?= $formError['hourAppointments'] ?></div><?php } ?>
                 </div>
                 <div class="d-flex align-items-end">
                   <input type="submit" class="btn btn-success" id="registerAppointments" name="registerAppointments" py-5 value="valider" />
@@ -87,10 +89,9 @@ include_once 'php/controllers/appointmentsCtrl.php';
           </div>
         </div>
       </div>
-    </div>
-  </header>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-</body>
+    </header>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
 </html>

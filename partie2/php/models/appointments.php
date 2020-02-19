@@ -8,8 +8,11 @@
 class appointments {
 
   public $id;
-  public $dateHour;
-  public $idPatients;
+  public $dateHour = '1900-12-31 12:30:00';
+  public $date = '1900-12-31';
+  public $hour = '12:30:00';
+  public $idPatients = 0;
+  public $dataBase = null;
 
   public function __construct() {
     try {
@@ -20,7 +23,17 @@ class appointments {
     }
   }
 
+  /**
+   * la méthode concatène la date et l'heure rentrée par l'user
+   * afin d'être à la bonne forme dans la base de donnée
+   * @return string
+   */
+  private function concatenation() {
+    return $this->date . ' ' . $this->hour;
+  }
+
   public function registerNewAppointment() {
+    $this->concatenation();
     // requete sql
     // bug sur la méthode : ' corriger
     $insertPatientSql = 'INSERT INTO hospitalE2N.appoitments
@@ -30,7 +43,7 @@ class appointments {
     // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
     $statement = $this->dataBase->prepare($insertPatientSql);
     $statement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
-    $statement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_IN);
+    $statement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
     // la méthode 'fetchAll(PDO::FETCH_OBJ)' retourne un tableau d'objet des resultats de la requete sql
     return $statement->execute();
   }
@@ -49,6 +62,19 @@ class appointments {
             . ' WHERE `appointments`.`id` = :id';
     $statement = $this->dataBase->prepare($request);
     $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_OBJ);
+  }
+
+  public function checkIfAppointmentExists() {
+    $request = 'SELECT COUNT(`id`) AS `checkIfAppointmentExists` '
+            . 'FROM `appointments` '
+            . 'WHERE `dateHour` = :dateHour '
+            . 'AND `idPatients` = :idPatients';
+
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
+    $statement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_OBJ);
   }

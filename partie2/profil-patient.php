@@ -1,6 +1,6 @@
 <?php
 include_once 'php/models/patients.php';
-include_once 'php/checkForm.php';
+include_once 'php/models/checkForm.php';
 include_once 'php/controllers/profilPatientCtrl.php';
 
 ?>
