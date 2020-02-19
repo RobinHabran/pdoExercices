@@ -37,7 +37,7 @@ class appointments {
     // requete sql
     // bug sur la méthode : ' corriger
     $insertPatientSql = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) '
-                      . ' VALUES (:dateHour, :idPatients)';
+            . ' VALUES (:dateHour, :idPatients)';
     // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
     $statement = $this->dataBase->prepare($insertPatientSql);
     $statement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
@@ -47,10 +47,26 @@ class appointments {
   }
 
   public function getAppointmentList() {
-    $request = 'SELECT DATE_FORMAT(`dateHour`,\'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`,\'%Hh%i\') AS `hour`, `idPatients` '
-            . 'FROM `appointments`';
+    $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour`, `idPatients` '
+            . ' FROM `appointments`'
+            . ' LEFT JOIN `patients`'
+            . ' ON `patients`.`id` = `appointments`.`idPatients`'
+            . ' GROUP BY `appointments`.`dateHour`'
+            . ' ORDER BY `appointments`.`dateHour`';
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
+  }
+  
+  public function getAppointment() {
+    $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour` '
+            . ' FROM `appointments`'
+            . ' LEFT JOIN `patients`'
+            . ' ON `patients`.`id` = `appointments`.`idPatients`'
+            . ' WHERE `id`= :id'
+            . ' GROUP BY `appointments`.`dateHour`'
+            . ' ORDER BY `appointments`.`dateHour`';
+    $statement = $this->dataBase->query($request);
+    return $statement->fetch(PDO::FETCH_OBJ);
   }
 
   public function checkIfAppointmentExistsById() {
@@ -75,6 +91,16 @@ class appointments {
     $statement->bindValue(':idPatients', $this->idPatients, PDO::PARAM_INT);
     $statement->execute();
     return $statement->fetch(PDO::FETCH_OBJ);
+  }
+
+  public function updateAppointment() {
+    $this->dateHour = $this->concatenation();
+    $request = 'UPDATE `appointments` '
+            . ' SET `dateHour` = :dateHour'
+            . ' WHERE `id` = :id';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':dateHour', $this->id, PDO::PARAM_INT);
+    return $statement->execute();
   }
 
 }

@@ -47,17 +47,21 @@ include_once 'php/controllers/listeAppointmentCtrl.php';
             <p class="text-white font-weight-light mb-5 text-left">Retrouvez la liste des patients</p>
             <table class="tableaux table-striped">
               <tr>
-                <th>id </th> 
+                <th>Nom</th>
+                <th>Prénom</th>
                 <th>Date</th> 
                 <th>Heure</th>
+                <th>infos</th>
               </tr>
               <?php
               foreach ($appointmentList as $appointment) {
                 ?>
                 <tr>
-                  <td><?= $appointment->idPatients ?></td>
+                  <td><?= $appointment->lastname ?></td>
+                  <td><?= $appointment->firstname ?></td>
                   <td><?= $appointment->date ?></td>
                   <td><?= $appointment->hour ?></td>
+                  <td><a href="rendezvous.php?id=<?= $appointment->idPatients ?>"><i class="fas fa-plus btn btn-success"></i></a></td>
                 </tr>
               <?php } ?>
             </table>
