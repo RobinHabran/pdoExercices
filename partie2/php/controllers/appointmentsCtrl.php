@@ -8,7 +8,7 @@ if (isset($_POST['registerAppointments'])) {
   $patient = new patient();
   $appointment = new appointments();
   $regexPatient = new checkForm();
-  $regexAppointmentDate = new checkForm();
+  $regex = new checkForm();
   $regexAppointmentHour = new checkForm();
 
   // vérification de validité de la date rentrée par l'user

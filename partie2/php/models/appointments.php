@@ -47,7 +47,7 @@ class appointments {
   }
 
   public function getAppointmentList() {
-    $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour`, `idPatients` '
+    $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour`, `idPatients`, `appointments`.`id` AS `idAppointment` '
             . ' FROM `appointments`'
             . ' LEFT JOIN `patients`'
             . ' ON `patients`.`id` = `appointments`.`idPatients`'
@@ -63,6 +63,17 @@ class appointments {
             . ' LEFT JOIN `patients`'
             . ' ON `patients`.`id` = `appointments`.`idPatients`'
             . ' WHERE `id`= :id'
+            . ' GROUP BY `appointments`.`dateHour`'
+            . ' ORDER BY `appointments`.`dateHour`';
+    $statement = $this->dataBase->query($request);
+    return $statement->fetch(PDO::FETCH_OBJ);
+  }
+  
+  public function getInfoAppointment() {
+    $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour` '
+            . ' FROM `appointments`'
+            . ' LEFT JOIN `patients`'
+            . ' ON `patients`.`id` = `appointments`.`idPatients`'
             . ' GROUP BY `appointments`.`dateHour`'
             . ' ORDER BY `appointments`.`dateHour`';
     $statement = $this->dataBase->query($request);

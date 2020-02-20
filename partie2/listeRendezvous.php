@@ -28,23 +28,31 @@ include_once 'php/controllers/listeAppointmentCtrl.php';
   <body class="text-center" cz-shortcut-listen="true">
     <?php include 'navbar.php'; ?>
     <header class="masthead" id="page-top">
-      <div class="container ">
+      <div class="container">
         <div class="row h-100 justify-content-center text-center">
           <div class="col-lg-10 align-self-end">
             <h1 id="h1-list-patient" class="text-uppercase text-white font-weight-bold">H - Local Hostpital</h1>
             <hr class="divider my-4">
           </div>
-          <div class="col-lg-12 align-self-baseline">
-            <p class="text-white font-weight-light mb-5">Vous souhaitez prendre rendez-vous?</p>
-            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutRendezvous.php.php">Prendre rendez-vous</a>
+          <div class="col-lg-8 align-self-baseline ">
+            <div class="row h-100 justify-content-center text-center rowLink">
+              <div class="col-lg-6 align-self-baseline">
+                <p class="text-white font-weight-light mb-5">Voir la liste des patients</p>
+                <a class="btn-xl" id="btnBack" href="liste-patients.php">Liste des patients</a>
+              </div>
+              <div class="col-lg-6 align-self-baseline">
+                <p class="text-white font-weight-light mb-5">Vous souhaitez vous enregistrer?</p>
+                <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez un patient</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="container">
         <div class="row h-100 justify-content-center">
           <div class="col-lg-10 align-self-baseline justify-content-center table-responsive">
-            <h2 id="h2-list-patient"><strong>Liste des patients</strong></h2>
-            <p class="text-white font-weight-light mb-5 text-left">Retrouvez la liste des patients</p>
+            <h2 id="h2-list-patient"><strong>Liste des rendez-vous</strong></h2>
+            <p class="text-white font-weight-light mb-5 text-left">Retrouvez la liste des rendez-vous</p>
             <table class="tableaux table-striped">
               <tr>
                 <th>Nom</th>
@@ -61,7 +69,7 @@ include_once 'php/controllers/listeAppointmentCtrl.php';
                   <td><?= $appointment->firstname ?></td>
                   <td><?= $appointment->date ?></td>
                   <td><?= $appointment->hour ?></td>
-                  <td><a href="rendezvous.php?id=<?= $appointment->idPatients ?>"><i class="fas fa-plus btn btn-success"></i></a></td>
+                  <td><a href="rendezvous.php?id=<?= $appointment->idAppointment ?>"><i class="fas fa-plus btn btn-success"></i></a></td>
                 </tr>
               <?php } ?>
             </table>

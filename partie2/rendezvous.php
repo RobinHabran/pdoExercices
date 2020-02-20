@@ -1,7 +1,7 @@
 <?php
 include_once 'php/models/appointments.php';
 include_once 'php/models/checkForm.php';
-include_once 'php/controllers/appointment.php';
+include_once 'php/controllers/rendezvousCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -34,51 +34,61 @@ include_once 'php/controllers/appointment.php';
             <hr class="divider my-4">
           </div>
         </div>
-        <div class="row h-100 justify-content-center text-center">
-          <div class="col-lg-12 align-self-baseline justify-content-center">
-            <p class="text-white font-weight-light mb-5 text-left">Retourner sur la liste des rendez-vous</p>
-            <a class="btn-xl js-scroll-trigger mr-auto" id="btnBack" href="liste-patients.php">retour à la liste</a>
+        <div class="row h-100 align-self-baseline justify-content-center">
+          <div class="col-lg-3 align-self-baseline">
+            <p class="text-white font-weight-light mb-5">Vous souhaitez vous enregistrer?</p>
+            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez&nbsp;un&nbsp;patient</a>
+          </div>
+          <div class="col-lg-3 align-self-baseline justify-content-center">
+            <p class="text-white font-weight-light mb-5">Retourner sur la liste des rendez-vous</p>
+            <a class="btn-xl" id="btnBack" href="listeRendezvous.php">retour&nbsp;à&nbsp;la&nbsp;liste</a>
+          </div>
+        </div>
+        <div class="row h-100 align-self-baseline justify-content-center">
+          <div class="col-lg-6 align-self-baseline">
             <h2 id="h2-list-patient"><strong>Liste des rendez-vous</strong></h2>
             <p class="text-white font-weight-light mb-5 text-left">Retrouvez la liste des rendez-vous du patient</p>
-            <div class="col-lg-8 align-self-baseline justify-content-center table-responsive">
-              <table class="tableaux table-striped">
-                <tr>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Date</th> 
-                  <th>Heure</th>
-                </tr>
-                <tr>
-                  <td><?= $appointmentInfo->lastname ?></td>
-                  <td><?= $appointmentInfo->firstname ?></td>
-                  <td><?= $appointmentInfo->date ?></td>
-                  <td><?= $appointmentInfo->hour ?></td>
-                </tr>
-              </table>
-            </div>
+          </div>
+        </div>
+        <div class="row align-self-baseline justify-content-center">
+          <div class="col-lg-6 ">
+            <table class="tableaux table-striped">
+              <tr>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date</th> 
+                <th>Heure</th>
+              </tr>
+              <tr>
+                <td><?= $appointmentInfo->lastname ?></td>
+                <td><?= $appointmentInfo->firstname ?></td>
+                <td><?= $appointmentInfo->date ?></td>
+                <td><?= $appointmentInfo->hour ?></td>
+              </tr>
+            </table>
           </div>
         </div>
         <div class="row h-100 justify-content-center">
-          <div class="col-lg-8 align-self-baseline justify-content-center">
+          <div class="col-lg-4 align-self-baseline justify-content-center">
             <form action="#" method="POST">
               <fieldset>
                 <legend>Patient</legend>
                 <!--  date  -->
-                <div class="form-group">
+                <div class="form-group text-left">
                   <label for="date">Date</label>
                   <input type="date" class="form-control <?= (empty($formError['date']) ? 'is-valid' : 'is-invalid') ?>" name="date" id="date" value="<?= (!empty($_POST['date']) ? $_POST['date'] : '') ?>">
                   <?php if (isset($_POST['registerAppointments']) && !empty($_POST['date'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                   <?php if (isset($formError['date'])) { ?><div class="feedback invalid-feedback"><?= $formError['date'] ?></div><?php } ?>
                 </div>
                 <!--  hourAppointments  -->
-                <div class="form-group">
+                <div class="form-group text-left">
                   <label for="hourAppointments">Heure</label>
                   <input type="time" max="19:00" min="08:00" step=900 class="form-control <?= (empty($formError['hourAppointments']) ? 'is-valid' : 'is-invalid') ?>" name="hourAppointments" id="hourAppointments" value="<?= (!empty($_POST['hourAppointments']) ? $_POST['hourAppointments'] : '' ) ?>">
                   <?php if (isset($_POST['registerAppointments']) && !empty($_POST['hourAppointments']) && empty($formError['hourAppointments'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                   <?php if (isset($formError['hourAppointments'])) { ?><div class="feedback invalid-feedback"><?= $formError['hourAppointments'] ?></div><?php } ?>
                 </div>
-                <div class="d-flex align-items-end">
-                  <input type="submit" class="btn btn-success" id="updateAppointment" name="updatePatient" py-5 value="valider" />
+                <div class=" row justify-content-end">
+                  <input type="submit" class="btn btn-success" id="updateAppointment" name="updateAppointment " py-5 value="valider" />
                 </div>
               </fieldset>
             </form>

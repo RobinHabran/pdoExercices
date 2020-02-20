@@ -55,16 +55,16 @@ header.masthead {
   background-color: #28a745;
 }
 section#patient {
-  height: 100vh;
-  padding-top: 4rem;
-  padding-bottom: calc(10rem - 72px);
+  min-height: calc(100vh - 78px);
+  padding-bottom: calc(15rem - 72px);
   background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 50%), url("../img/desk.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
 }
-#patient{
+#formPatient{
+  margin-top: 80px;
 }
 #containerPatient{
 }
@@ -130,5 +130,6 @@ th{
 #updatePatient{
   padding: 10px 25px; 
 }
-#btnBack{
+.rowLink{
+  margin-bottom: 0px;
 }

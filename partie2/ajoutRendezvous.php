@@ -29,15 +29,23 @@ include_once 'php/controllers/appointmentsCtrl.php';
   <body class="text-center" cz-shortcut-listen="true">
     <?php include 'navbar.php'; ?>
     <header class="masthead" id="page-top">
-      <div class="container ">
+      <div class="container">
         <div class="row h-100 justify-content-center text-center">
           <div class="col-lg-8 align-self-end">
             <h1 id="h1-list-patient" class="text-uppercase text-white font-weight-bold">H - Local Hostpital</h1>
             <hr class="divider my-4">
           </div>
-          <div class="col-lg-8 align-self-baseline">
-            <p class="text-white font-weight-light mb-5">Vous souhaitez vous enregistrer?</p>
-            <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez un patient</a>
+          <div class="col-lg-8 align-self-baseline ">
+            <div class="row h-100 justify-content-center text-center rowLink">
+              <div class="col-lg-6 align-self-baseline">
+                <p class="text-white font-weight-light mb-5">Vous souhaitez vous enregistrer?</p>
+                <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="ajoutPatient.php">Enregistrez un patient</a>
+              </div>
+              <div class="col-lg-6 align-self-baseline">
+                <p class="text-white font-weight-light mb-5">Voir la liste des rendez-vous</p>
+                <a class="btn-xl" id="btnBack" href="listeRendezvous.php">liste des rendez-vous</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -51,12 +59,12 @@ include_once 'php/controllers/appointmentsCtrl.php';
                 <div class="form-group">
                   <select name="patientId" class="col-md-12" id="patientId">
                     <option disabled
-                      <?php 
-                      if (empty($_POST['patientId'])) {
-                        echo 'selected';
-                      }
-                      ?>>Veuillez séléctionner un patient</option>
-                      <?php foreach ($patientsList as $patient) { ?>
+                    <?php
+                    if (empty($_POST['patientId'])) {
+                      echo 'selected';
+                    }
+                    ?>>Veuillez séléctionner un patient</option>
+                            <?php foreach ($patientsList as $patient) { ?>
                       <option value="<?= $patient->id ?>" 
                       <?php
                       if (!empty($_POST['patientId']) && $_POST['patientId'] == $patient->id) {
