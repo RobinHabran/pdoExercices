@@ -3,7 +3,7 @@ include_once 'php/models/patients.php';
 include_once 'php/models/appointments.php';
 include_once 'php/models/checkForm.php';
 include_once 'php/controllers/listePatientCtrl.php';
-include_once 'php/controllers/appointmentsCtrl.php';
+include_once 'php/controllers/addAppointmentsCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -51,29 +51,30 @@ include_once 'php/controllers/appointmentsCtrl.php';
       </div>
       <div class="container-fluid">
         <div class="row h-100 justify-content-center">
-          <div class="col-lg-4  justify-content-center">
+          <div class="col-lg-4 justify-content-center">
             <form action="#" method="POST">
               <fieldset>
                 <legend class="">Prenez rendez-vous</legend>
                 <!--  select patient  -->
                 <div class="form-group">
-                  <select name="patientId" class="col-md-12" id="patientId">
-                    <option disabled
+                  <select name="idPatients" class="col-md-12" id="idPatients">
+                    <option disabled 
                     <?php
-                    if (empty($_POST['patientId'])) {
+                    if (empty($_POST['idPatients'])) {
                       echo 'selected';
                     }
                     ?>>Veuillez séléctionner un patient</option>
                             <?php foreach ($patientsList as $patient) { ?>
                       <option value="<?= $patient->id ?>" 
                       <?php
-                      if (!empty($_POST['patientId']) && $_POST['patientId'] == $patient->id) {
+                      if (!empty($_POST['idPatients']) && $_POST['idPatients'] == $patient->id) {
                         echo 'selected';
                       }
                       ?>><?= $patient->lastname ?> <?= $patient->firstname ?> <?= $patient->birthdate ?></option>
-                      <?php if (isset($formError['patientx'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
                     <?php } ?>
                   </select>
+                  <?php if (isset($_POST['registerAppointments']) && !empty($_POST['idPatients'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
+                      <?php if (isset($formError['idPatients'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
                 </div>
                 <!--  date  -->
                 <div class="form-group">
@@ -89,7 +90,7 @@ include_once 'php/controllers/appointmentsCtrl.php';
                   <?php if (isset($_POST['registerAppointments']) && !empty($_POST['hourAppointments']) && empty($formError['hourAppointments'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
                   <?php if (isset($formError['hourAppointments'])) { ?><div class="feedback invalid-feedback"><?= $formError['hourAppointments'] ?></div><?php } ?>
                 </div>
-                <div class="d-flex align-items-end">
+                <div class="d-flex justify-content-end">
                   <input type="submit" class="btn btn-success" id="registerAppointments" name="registerAppointments" py-5 value="valider" />
                 </div>
               </fieldset>

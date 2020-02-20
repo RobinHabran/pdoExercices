@@ -33,29 +33,44 @@ class checkForm {
   private function compareRegexWithPost() {
     // assignation 
     $this->value = $_POST[$this->postName];
-    return preg_match($this->getCorrespondantRegexWithPost(), $this->value);
+    $resultCorrespondantRegex = $this->getCorrespondantRegexWithPost();
+    if ($resultCorrespondantRegex != 'error') {
+      $regexCorrespond = preg_match($resultCorrespondantRegex, $this->value);
+    } else {
+      // -1 = int erreur
+      $regexCorrespond = -1;
+    }
+    return $regexCorrespond;
   }
 
   /**
    * méthode qui affilie à la variable valueType son type en fonction de sa valeur
    */
   private function affectValueType() {
+    $validationAffectValue = false;
     if ($this->postName == 'firstname') {
       $this->valueType = 'name';
+      $validationAffectValue = true;
     } elseif ($this->postName == 'lastname') {
       $this->valueType = 'name';
+      $validationAffectValue = true;
     } elseif ($this->postName == 'birthdate' || $this->postName == 'date') {
       $this->valueType = 'date';
+      $validationAffectValue = true;
     } elseif ($this->postName == 'hourAppointments') {
       $this->valueType = 'hourAppointments';
+      $validationAffectValue = true;
     } elseif ($this->postName == 'phone') {
       $this->valueType = 'phone';
+      $validationAffectValue = true;
     } elseif ($this->postName == 'mail') {
       $this->valueType = 'mail';
-    }elseif ($this->postName == 'id' || $this->postName == 'patientId') {
+      $validationAffectValue = true;
+    } elseif ($this->postName == 'id' || $this->postName == 'idPatients') {
       $this->valueType = 'id';
+      $validationAffectValue = true;
     }
-    return true;
+    return $validationAffectValue;
   }
 
   /**
@@ -63,19 +78,23 @@ class checkForm {
    * @return string
    */
   private function getCorrespondantRegexWithPost() {
-    $this->affectValueType();
-    if ($this->valueType == 'name') {
-      $regex = $this->name;
-    } elseif ($this->valueType == 'date') {
-      $regex = $this->dateSql;
-    } elseif ($this->valueType == 'hourAppointments') {
-      $regex = $this->hourAppointments;
-    } elseif ($this->valueType == 'phone') {
-      $regex = $this->phone;
-    } elseif ($this->valueType == 'mail') {
-      $regex = $this->mail;
-    }elseif ($this->valueType == 'id') {
-      $regex = $this->number;
+    $noErrorValueType = $this->affectValueType();
+    if ($noErrorValueType) {
+      if ($this->valueType == 'name') {
+        $regex = $this->name;
+      } elseif ($this->valueType == 'date') {
+        $regex = $this->dateSql;
+      } elseif ($this->valueType == 'hourAppointments') {
+        $regex = $this->hourAppointments;
+      } elseif ($this->valueType == 'phone') {
+        $regex = $this->phone;
+      } elseif ($this->valueType == 'mail') {
+        $regex = $this->mail;
+      } elseif ($this->valueType == 'id') {
+        $regex = $this->number;
+      }
+    } else {
+      $regex = 'error';
     }
     return $regex;
   }
@@ -84,7 +103,10 @@ class checkForm {
     $isValid = false;
     if (!empty($this->value)) {
       // comparaison de valeur avec la regex
-      if ($this->compareRegexWithPost()) {
+      $compareRegexWithPostResult = $this->compareRegexWithPost();
+      if ($compareRegexWithPostResult == -1) {
+        $this->error = 'msgPerso';
+      } elseif ($compareRegexWithPostResult) {
         // 'htmlspecialchars()' remplace le balisage par leur valeur en html. ex: '<script>' devient '&lt script &gt'
         $this->value = htmlspecialchars($this->value);
         $isValid = true;
@@ -109,7 +131,7 @@ class checkForm {
           $this->error = 'Veillez à ce que votre mail soit de la forme xxx@yyy.com';
         }
         // cas de l'id
-        elseif($this->valueType == 'id'){
+        elseif ($this->valueType == 'id') {
           $this->error = 'Veuillez renseigner un ID valide';
         }
       }
@@ -141,8 +163,8 @@ class checkForm {
       // cas du email
       elseif ($this->postName == 'mail') {
         $this->error = 'Veillez renseigner votre e-mail';
-      // cas de l'id
-      }elseif($this->postName == 'id' || $this->postName == 'patientId'){
+        // cas de l'id
+      } elseif ($this->postName == 'id' || $this->postName == 'patientId') {
         $this->error = 'msgPerso';
       }
     }

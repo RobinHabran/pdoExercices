@@ -39,7 +39,7 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
                 </div>
                 <div class="col-lg-6 align-self-baseline">
                   <p class="text-white font-weight-light mb-5">Voir la liste des rendez-vous</p>
-                  <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="listeRendezvous.php.php">Liste des rendez-vous</a>
+                  <a class="btn-xl js-scroll-trigger" id="btnScrollRegister" href="listeRendezvous.php">Liste des rendez-vous</a>
                 </div>
               </div>
             </div>

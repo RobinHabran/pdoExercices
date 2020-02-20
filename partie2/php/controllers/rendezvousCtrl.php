@@ -41,7 +41,7 @@ if (!empty($_GET['id'])) {
         if ($isappointmentExist) {
           // cas où le appointment n'existe pas encore en base de donnée
           // alors j'appel la méthode qui envoi les valeur dans la bd
-          $appointmentUpdate = $appointment->updateAppointment();
+          $appointment->updateAppointment();
         }
       }
     }

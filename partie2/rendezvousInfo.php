@@ -88,7 +88,7 @@ include_once 'php/controllers/rendezvousCtrl.php';
                   <?php if (isset($formError['hourAppointments'])) { ?><div class="feedback invalid-feedback"><?= $formError['hourAppointments'] ?></div><?php } ?>
                 </div>
                 <div class=" row justify-content-end">
-                  <input type="submit" class="btn btn-success" id="updateAppointment" name="updateAppointment " py-5 value="valider" />
+                  <input type="submit" class="btn btn-success" id="updateAppointment" name="updateAppointment" py-5 value="valider" />
                 </div>
               </fieldset>
             </form>

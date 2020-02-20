@@ -1,7 +1,7 @@
 <?php
 include_once 'php/models/patients.php';
 include_once 'php/controllers/ajoutPatientCtrl.php';
-include_once 'php/controllers/appointmentsCtrl.php';
+include_once 'php/controllers/addAppointmentsCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">

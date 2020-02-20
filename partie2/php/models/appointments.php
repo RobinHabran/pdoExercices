@@ -106,12 +106,12 @@ class appointments {
 
   public function updateAppointment() {
     $this->dateHour = $this->concatenation();
-    $request = 'UPDATE `appointments` '
+    $request = 'UPDATE `appointments`'
             . ' SET `dateHour` = :dateHour'
             . ' WHERE `id` = :id';
     $statement = $this->dataBase->prepare($request);
-    $statement->bindValue(':dateHour', $this->id, PDO::PARAM_INT);
+    $statement->bindValue(':dateHour', $this->dateHour, PDO::PARAM_STR);
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
     return $statement->execute();
   }
-
 }
