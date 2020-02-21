@@ -33,7 +33,6 @@ class appointments {
   }
 
   public function registerNewAppointment() {
-    $this->dateHour = $this->concatenation();
     // requete sql
     // bug sur la méthode : ' corriger
     $insertPatientSql = 'INSERT INTO `appointments` (`dateHour`, `idPatients`) '
@@ -56,7 +55,7 @@ class appointments {
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }
-  
+
   public function getAppointment() {
     $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour` '
             . ' FROM `appointments`'
@@ -68,7 +67,7 @@ class appointments {
     $statement = $this->dataBase->query($request);
     return $statement->fetch(PDO::FETCH_OBJ);
   }
-  
+
   public function getInfoAppointment() {
     $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour` '
             . ' FROM `appointments`'
@@ -92,6 +91,7 @@ class appointments {
   }
 
   public function checkIfAppointmentExists() {
+    $this->dateHour = $this->concatenation();
     $request = 'SELECT COUNT(`id`) AS `checkIfAppointmentExists` '
             . 'FROM `appointments` '
             . 'WHERE `dateHour` = :dateHour '
@@ -114,4 +114,13 @@ class appointments {
     $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
     return $statement->execute();
   }
+  // A FINIR
+  public function deleteAppointment() {
+    $request = 'DELETE FROM `appointments`'
+             . ' WHERE `id` = :id';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    return $statement->execute();
+  }
+
 }

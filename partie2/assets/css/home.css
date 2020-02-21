@@ -137,3 +137,14 @@ th{
 .rowLink{
   margin-bottom: 0px;
 }
+.feedbackAptmtAlreadyExist{
+  padding: 10px 50px;
+  margin: 20px 0;
+  border-radius: 10px;
+  background-color: #80be8680;
+  color: white;
+  font-weight: bold;
+}
+.feedbackAptmtAlreadyExist p{
+  margin: 30px 0;
+}

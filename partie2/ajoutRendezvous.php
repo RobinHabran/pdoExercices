@@ -50,6 +50,17 @@ include_once 'php/controllers/addAppointmentsCtrl.php';
         </div>
       </div>
       <div class="container-fluid">
+        <?php
+        if (isset($formError['appointments'])) {
+          ?>
+          <div class="row h-100 justify-content-center">
+            <div class="col-lg-4 feedbackAptmtAlreadyExist">
+              <p><?= $formError['appointments'] ?></p>
+              <p>Rdv de <?= $appointmentInfo->lastname ?> <?= $appointmentInfo->firstname ?> le <?= $appointmentInfo->date ?> à <?= $appointmentInfo->hour ?></p>
+            </div>
+          </div>
+        <?php }
+        ?>
         <div class="row h-100 justify-content-center">
           <div class="col-lg-4 justify-content-center">
             <form action="#" method="POST">
@@ -71,10 +82,10 @@ include_once 'php/controllers/addAppointmentsCtrl.php';
                         echo 'selected';
                       }
                       ?>><?= $patient->lastname ?> <?= $patient->firstname ?> <?= $patient->birthdate ?></option>
-                    <?php } ?>
+                            <?php } ?>
                   </select>
                   <?php if (isset($_POST['registerAppointments']) && !empty($_POST['idPatients'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-                      <?php if (isset($formError['idPatients'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
+                  <?php if (isset($formError['idPatients'])) { ?><div class="feedback invalid-feedback"><?= ($formError['patient'] != 'msgPerso' ? $formError['patient'] : 'veuillez renseigner un patient') ?></div><?php } ?>
                 </div>
                 <!--  date  -->
                 <div class="form-group">

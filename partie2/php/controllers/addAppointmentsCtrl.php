@@ -38,6 +38,7 @@ if (isset($_POST['registerAppointments'])) {
   // si le tableau d'erreur est vide alors il n'y a pas d'erreur dédectée dans la valeur des input
   if (count($formError) == 0) {
     // On vérifie que le rendez-vous n'existe pas déjà dans la bdd
+    $appointmentInfo = $appointment->getInfoAppointment();
     $exists = $appointment->checkIfAppointmentExists();
     if ($exists->checkIfAppointmentExists == 0) {
       /* Si la méthode d'ajout de rdv renvoie true on affiche un message

@@ -1,7 +1,6 @@
 <?php
 include_once 'php/models/patients.php';
 include_once 'php/models/appointments.php';
-include_once 'php/controllers/appointmentsCtrl.php';
 include_once 'php/controllers/listeAppointmentCtrl.php';
 ?>
 <!doctype html>
@@ -59,7 +58,8 @@ include_once 'php/controllers/listeAppointmentCtrl.php';
                 <th>Prénom</th>
                 <th>Date</th> 
                 <th>Heure</th>
-                <th>infos</th>
+                <th>Infos</th>
+                <th>Suppression</th>
               </tr>
               <?php
               foreach ($appointmentList as $appointment) {
@@ -70,6 +70,7 @@ include_once 'php/controllers/listeAppointmentCtrl.php';
                   <td><?= $appointment->date ?></td>
                   <td><?= $appointment->hour ?></td>
                   <td><a href="rendezvousInfo.php?id=<?= $appointment->idAppointment ?>"><i class="fas fa-plus btn btn-success"></i></a></td>
+                  <td><button type="submit" name="deleteAppointment" id="deleteAppointment" class="fas fa-trash-alt btn btn-danger"></button></td>
                 </tr>
               <?php } ?>
             </table>
