@@ -70,7 +70,11 @@ include_once 'php/controllers/listeAppointmentCtrl.php';
                   <td><?= $appointment->date ?></td>
                   <td><?= $appointment->hour ?></td>
                   <td><a href="rendezvousInfo.php?id=<?= $appointment->idAppointment ?>"><i class="fas fa-plus btn btn-success"></i></a></td>
-                  <td><button type="submit" name="deleteAppointment" id="deleteAppointment" class="fas fa-trash-alt btn btn-danger"></button></td>
+                <form action="#" method="POST">
+                  <td>
+                    <button type="submit" name="deleteAppointment" value="<?= $appointment->idAppointment ?>" id="deleteAppointment" class="fas fa-trash-alt btn btn-danger"></button>
+                  </td>
+                </form>
                 </tr>
               <?php } ?>
             </table>

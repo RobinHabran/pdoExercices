@@ -50,7 +50,7 @@ class appointments {
             . ' FROM `appointments`'
             . ' LEFT JOIN `patients`'
             . ' ON `patients`.`id` = `appointments`.`idPatients`'
-            . ' GROUP BY `appointments`.`dateHour`'
+            . ' GROUP BY `appointments`.`id`'
             . ' ORDER BY `appointments`.`dateHour`';
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
