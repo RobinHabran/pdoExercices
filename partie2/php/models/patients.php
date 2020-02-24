@@ -13,6 +13,7 @@ class patient {
   public $birthdate = '1900-12-31';
   public $phone = '0123456789';
   public $mail = 'test@test.test';
+  public $searchTyped;
   private $dataBase = NULL;
 
   /**
@@ -25,6 +26,16 @@ class patient {
     } catch (PDOException $exc) {
       $sqlError = die('database is not available');
     }
+  }
+
+  public function searchPatient() {
+    $request = 'SELECT * FROM patients'
+            . ' WHERE'
+            . ' (`firstname` LIKE \'%lebogoss%\')'
+            . ' OR'
+            . ' (`lastname` LIKE \'%lebogoss%\')';
+    $statement = $this->dataBase->query($request);
+    return $statement->fetchAll(PDO::FETCH_OBJ);
   }
 
   public function registerNewPatient() {
@@ -117,6 +128,14 @@ class patient {
     $statement->bindValue(':birthdate', $this->birthdate, PDO::PARAM_STR);
     $statement->bindValue(':phone', $this->phone, PDO::PARAM_STR);
     $statement->bindValue(':mail', $this->mail, PDO::PARAM_STR);
+    $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+    return $statement->execute();
+  }
+
+  public function deletePatient() {
+    $request = 'DELETE FROM `patients`'
+            . ' WHERE `id` = :id';
+    $statement = $this->dataBase->prepare($request);
     $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
     return $statement->execute();
   }

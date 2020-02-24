@@ -63,6 +63,9 @@ include_once 'php/controllers/addAppointmentsCtrl.php';
         ?>
         <div class="row h-100 justify-content-center">
           <div class="col-lg-4 justify-content-center">
+            <?php if(isset($_POST['registerAppointments']) && empty($formError)){ 
+              ?><div class="feedbackAptmtAlreadyExist">Le rendez-vous a bien été enregistré</div> <?php
+            } ?>
             <form action="#" method="POST">
               <fieldset>
                 <legend class="">Prenez rendez-vous</legend>

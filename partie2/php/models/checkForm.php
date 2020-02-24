@@ -66,7 +66,7 @@ class checkForm {
     } elseif ($this->postName == 'mail') {
       $this->valueType = 'mail';
       $validationAffectValue = true;
-    } elseif ($this->postName == 'id' || $this->postName == 'idPatients') {
+    } elseif ($this->postName == 'id' || $this->postName == 'idPatients' || $this->postName == 'idAppointments' || $this->postName == '%id%') {
       $this->valueType = 'id';
       $validationAffectValue = true;
     }

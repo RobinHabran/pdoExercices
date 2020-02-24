@@ -114,7 +114,7 @@ class appointments {
     $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
     return $statement->execute();
   }
-  // A FINIR
+  
   public function deleteAppointment() {
     $request = 'DELETE FROM `appointments`'
              . ' WHERE `id` = :id';

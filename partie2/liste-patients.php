@@ -1,6 +1,7 @@
 <?php
 include_once 'php/models/patients.php';
 include_once 'php/controllers/listePatientCtrl.php';
+include_once 'php/controllers/searchPatientCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -47,27 +48,64 @@ include_once 'php/controllers/listePatientCtrl.php';
         </div>
       </div>
       <div class="container">
-        <div class="row h-100 justify-content-center">
+        <div class="row h-100 justify-content-center">=
           <div class="col-lg-10 align-self-baseline justify-content-center table-responsive">
-            <h2 id="h2-list-patient"><strong>Liste des patients</strong></h2>
-            <p class="text-white font-weight-light mb-5 text-left">Retrouvez la liste des patients</p>
+            <div class="row h-100 headerForm">
+              <div class="col-lg-6 align-self-baseline titleHeadForm">
+                <h2 id="h2-list-patient"><strong>Liste des patients</strong></h2>
+                <p class="text-white font-weight-light mb-2 text-left">Retrouvez la liste des patients</p>
+              </div>
+              <div class="col-lg-6 align-self-baseline searchHeadForm">
+                <form  action="#" method="POST" id="searchForm">
+                  <label for="searchPatientInput">Rechercher un patient</label>
+                  <input type="text" placeholder="Jean BENOIT" name="searchPatientInput" id="searchPatientInput" </>
+                  <button type="submit" name="searchPatient" value="" id="searchPatient" class="fa fa-search btn btn-success"></button>
+                </form>
+              </div>
+            </div>
             <table class="tableaux table-striped">
               <tr>
                 <th>Nom </th> 
                 <th>Prénom </th> 
                 <th>Date de naissance </th>  
                 <th>Infos</th>
+                <th>Supprimer</th>
               </tr>
               <?php
-              foreach ($patientsList as $patient) {
-                ?>
-                <tr>
-                  <td><?= $patient->lastname ?></td>
-                  <td><?= $patient->firstname ?></td>
-                  <td><?= $patient->birthdate ?></td>
-                  <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
-                </tr>
-              <?php } ?>
+              if (isset($_POST['searchPatient'])) {
+                foreach ($searchPatientList as $patient) {
+                  ?>
+                  <tr>
+                    <td><?= $patient->lastname ?></td>
+                    <td><?= $patient->firstname ?></td>
+                    <td><?= $patient->birthdate ?></td>
+                    <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
+                  <form action="#" method="POST">
+                    <td>
+                      <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
+                    </td>
+                  </form>
+                  </tr>
+                  <?php
+                }
+              } else {
+                foreach ($patientsList as $patient) {
+                  ?>
+                  <tr>
+                    <td><?= $patient->lastname ?></td>
+                    <td><?= $patient->firstname ?></td>
+                    <td><?= $patient->birthdate ?></td>
+                    <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
+                  <form action="#" method="POST">
+                    <td>
+                      <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
+                    </td>
+                  </form>
+                  </tr>
+                  <?php
+                }
+              }
+              ?>
             </table>
           </div>
         </div>

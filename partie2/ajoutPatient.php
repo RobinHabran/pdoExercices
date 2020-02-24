@@ -46,6 +46,9 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
           </div>
           <div class="row justify-content-center">
             <div class="col-lg-6">
+              <?php if (isset($_POST['registerPatient']) && empty($formError)) {
+                ?><div class="feedbackAptmtAlreadyExist">Le patient a bien été enregistré</div> <?php }
+              ?>
               <div id="formPatient">
                 <h2 class="text-white mt-0">Enregistrez vous comme patient</h2>
                 <p class="text-white-50 mb-4">Renseignez vos informations personnelles afin de vous enregistrer</p>
@@ -53,7 +56,8 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
                   <div class="col-12 validationRegisterSuccess">
                     <p>Votre compte a été enregistré avec succès</p>
                   </div>
-                <?php } else {
+                <?php
+                } else {
                   if (isset($insertError)) {
                     ?><div class="feedback valid-feedback patientExist"><?= $insertError ?></div><?php }
               ?>

@@ -148,3 +148,21 @@ th{
 .feedbackAptmtAlreadyExist p{
   margin: 30px 0;
 }
+.titleHeadForm{
+  margin-bottom: 30px;
+  text-align: start;
+}
+.searchHeadForm label{
+  display: block;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+searchPatientInput{
+  font-weight: 400;
+}
+#searchForm{
+  background: none;
+  padding: none;
+}
