@@ -9,4 +9,11 @@ if (isset($_POST['deletePatient'])) {
   }
 }
 
-$patientsList = $patients->getPatientsList();
+if (isset($_POST['searchPatient'])) {
+  if (!empty($_POST['searchPatientInput'])) {
+    $patients->lastname = $patients->firstname = $patients->mail = $patients->phone = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
+    $patientList = $patients->searchPatient();
+  }
+} else {
+  $patientsList = $patients->getPatientsList();
+}

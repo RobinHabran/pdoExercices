@@ -29,12 +29,22 @@ class patient {
   }
 
   public function searchPatient() {
-    $request = 'SELECT * FROM patients'
+    $request = 'SELECT `lastname`, `firstname`, `mail`, `phone`'
+            . ' FROM patients'
             . ' WHERE'
-            . ' (`firstname` LIKE \'%lebogoss%\')'
+            . ' (`firstname` LIKE :firstname)'
             . ' OR'
-            . ' (`lastname` LIKE \'%lebogoss%\')';
-    $statement = $this->dataBase->query($request);
+            . ' (`lastname` LIKE :lastname)'
+            . ' OR'
+            . ' (`mail` LIKE :mail)'
+            . ' OR'
+            . ' (`phone` LIKE :phone)';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':lastname', $this->lastname, PDO::PARAM_STR);
+    $statement->bindValue(':firstname', $this->firstname, PDO::PARAM_STR);
+    $statement->bindValue(':phone', $this->phone, PDO::PARAM_STR);
+    $statement->bindValue(':mail', $this->mail, PDO::PARAM_STR);
+    $statement->execute();
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }
 
@@ -44,7 +54,7 @@ class patient {
     $insertPatientSql = 'INSERT INTO hospitalE2N.patients
                          (`lastname`,`firstname`,`birthdate`,`phone`,`mail`)
                          VALUES
-                         (UPPER(:lastname),:firstname,:birthdate,:phone,:mail)';
+                         :lastname,:firstname,:birthdate,:phone,:mail)';
     // on fait appel à la méthode 'query' à qui on donne la requete sql qui nous retourne une instance d'objet PDOstatement
     $statement = $this->dataBase->prepare($insertPatientSql);
     /* bindValue() vérifie la validité des parametres
@@ -63,8 +73,9 @@ class patient {
   }
 
   public function getPatientsList() {
-    $request = 'SELECT `id`, `lastname`, `firstname`, DATE_FORMAT(`birthdate`,\'%d/%m/%Y\') AS `birthdate` '
-            . 'FROM `patients`';
+    $request = 'SELECT `id`, UPPER(`lastname`) AS `lastname`, `firstname`, DATE_FORMAT(`birthdate`,\'%d/%m/%Y\') AS `birthdate` '
+            . ' FROM `patients`'
+            . ' ORDER BY `lastname`';
     $statement = $this->dataBase->query($request);
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }

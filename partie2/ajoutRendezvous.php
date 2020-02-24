@@ -50,17 +50,6 @@ include_once 'php/controllers/addAppointmentsCtrl.php';
         </div>
       </div>
       <div class="container-fluid">
-        <?php
-        if (isset($formError['appointments'])) {
-          ?>
-          <div class="row h-100 justify-content-center">
-            <div class="col-lg-4 feedbackAptmtAlreadyExist">
-              <p><?= $formError['appointments'] ?></p>
-              <p>Rdv de <?= $appointmentInfo->lastname ?> <?= $appointmentInfo->firstname ?> le <?= $appointmentInfo->date ?> à <?= $appointmentInfo->hour ?></p>
-            </div>
-          </div>
-        <?php }
-        ?>
         <div class="row h-100 justify-content-center">
           <div class="col-lg-4 justify-content-center">
             <?php if(isset($_POST['registerAppointments']) && empty($formError)){ 

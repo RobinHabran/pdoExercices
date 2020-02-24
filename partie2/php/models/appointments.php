@@ -46,7 +46,7 @@ class appointments {
   }
 
   public function getAppointmentList() {
-    $request = 'SELECT  `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour`, `idPatients`, `appointments`.`id` AS `idAppointment` '
+    $request = 'SELECT  UPPER(`lastname`) AS `lastname`, `firstname`, DATE_FORMAT(`dateHour`, \'%d/%m/%Y\') AS `date`, DATE_FORMAT(`dateHour`, \'%Hh%i\')  AS `hour`, `idPatients`, `appointments`.`id` AS `idAppointment` '
             . ' FROM `appointments`'
             . ' LEFT JOIN `patients`'
             . ' ON `patients`.`id` = `appointments`.`idPatients`'

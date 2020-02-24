@@ -1,7 +1,6 @@
 <?php
 include_once 'php/models/patients.php';
 include_once 'php/controllers/listePatientCtrl.php';
-include_once 'php/controllers/searchPatientCtrl.php';
 ?>
 <!doctype html>
 <html lang="fr" dir="ltr">
@@ -59,7 +58,7 @@ include_once 'php/controllers/searchPatientCtrl.php';
                 <form  action="#" method="POST" id="searchForm">
                   <label for="searchPatientInput">Rechercher un patient</label>
                   <input type="text" placeholder="Jean BENOIT" name="searchPatientInput" id="searchPatientInput" </>
-                  <button type="submit" name="searchPatient" value="" id="searchPatient" class="fa fa-search btn btn-success"></button>
+                  <button title="rechercher" type="submit" name="searchPatient" value="" id="searchPatient" class="fa fa-search btn btn-success"></button>
                 </form>
               </div>
             </div>
@@ -72,38 +71,20 @@ include_once 'php/controllers/searchPatientCtrl.php';
                 <th>Supprimer</th>
               </tr>
               <?php
-              if (isset($_POST['searchPatient'])) {
-                foreach ($searchPatientList as $patient) {
-                  ?>
-                  <tr>
-                    <td><?= $patient->lastname ?></td>
-                    <td><?= $patient->firstname ?></td>
-                    <td><?= $patient->birthdate ?></td>
-                    <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
-                  <form action="#" method="POST">
-                    <td>
-                      <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
-                    </td>
-                  </form>
-                  </tr>
-                  <?php
-                }
-              } else {
-                foreach ($patientsList as $patient) {
-                  ?>
-                  <tr>
-                    <td><?= $patient->lastname ?></td>
-                    <td><?= $patient->firstname ?></td>
-                    <td><?= $patient->birthdate ?></td>
-                    <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
-                  <form action="#" method="POST">
-                    <td>
-                      <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
-                    </td>
-                  </form>
-                  </tr>
-                  <?php
-                }
+              foreach ($patientsList as $patient) {
+              ?>
+              <tr>
+                <td><?= $patient->lastname ?></td>
+                <td><?= $patient->firstname ?></td>
+                <td><?= $patient->birthdate ?></td>
+                <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
+              <form action="#" method="POST">
+                <td>
+                  <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
+                </td>
+              </form>
+              </tr>
+              <?php
               }
               ?>
             </table>

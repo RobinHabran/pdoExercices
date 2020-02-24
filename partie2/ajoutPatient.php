@@ -46,21 +46,19 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
           </div>
           <div class="row justify-content-center">
             <div class="col-lg-6">
-              <?php if (isset($_POST['registerPatient']) && empty($formError)) {
-                ?><div class="feedbackAptmtAlreadyExist">Le patient a bien été enregistré</div> <?php }
-              ?>
               <div id="formPatient">
                 <h2 class="text-white mt-0">Enregistrez vous comme patient</h2>
                 <p class="text-white-50 mb-4">Renseignez vos informations personnelles afin de vous enregistrer</p>
                 <?php if (isset($_POST['registerPatient']) && (count($formError) == 0) && (!isset($insertError))) { ?>
                   <div class="col-12 validationRegisterSuccess">
-                    <p>Votre compte a été enregistré avec succès</p>
+                    <p>Le patient a été enregistré avec succès</p>
                   </div>
-                <?php
-                } else {
+                  <?php
+                }
                   if (isset($insertError)) {
-                    ?><div class="feedback valid-feedback patientExist"><?= $insertError ?></div><?php }
-              ?>
+                    ?><div class="feedback valid-feedback patientExist"><?= $insertError ?></div><?php 
+                  }
+                  ?>
                   <form action="#" method="POST">
                     <fieldset>
                       <legend>Patient</legend>
@@ -69,35 +67,35 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
                         <label for="lastname">Nom de famille</label>
                         <input type="text" class="form-control <?= (empty($formError['lastname']) ? 'is-valid' : 'is-invalid') ?>" name="lastname" id="lastname" placeholder="Dupond" value="<?= (!empty($_POST['lastname']) ? $_POST['lastname'] : '') ?>">
                         <?php if (isset($_POST['registerPatient']) && !empty($_POST['firstname'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-  <?php if (isset($formError['lastname'])) { ?><div class="feedback invalid-feedback"><?= $formError['lastname'] ?></div><?php } ?>
+                        <?php if (isset($formError['lastname'])) { ?><div class="feedback invalid-feedback"><?= $formError['lastname'] ?></div><?php } ?>
                       </div>
                       <!--  firtname  -->
                       <div class="form-group text-left">
                         <label for="firstname">Prénom</label>
                         <input type="text" class="form-control <?= (empty($formError['firstname']) ? 'is-valid' : 'is-invalid') ?>" name="firstname" id="firstname" placeholder="Jean" value="<?= (!empty($_POST['firstname']) ? $_POST['firstname'] : '') ?>">
                         <?php if (isset($_POST['registerPatient']) && !empty($_POST['firstname'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-  <?php if (isset($formError['firstname'])) { ?><div class="feedback invalid-feedback"><?= $formError['firstname'] ?></div><?php } ?>
+                        <?php if (isset($formError['firstname'])) { ?><div class="feedback invalid-feedback"><?= $formError['firstname'] ?></div><?php } ?>
                       </div>
                       <!--  birthdate  -->
                       <div class="form-group text-left">
                         <label for="birthdate">Date de naissance</label>
                         <input type="date" class="form-control <?= (empty($formError['birthdate']) ? 'is-valid' : 'is-invalid') ?>" name="birthdate" id="birthdate" value="<?= (!empty($_POST['birthdate']) ? $_POST['birthdate'] : '') ?>">
                         <?php if (isset($_POST['registerPatient']) && !empty($_POST['birthdate']) && empty($formError['birthdate'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-  <?php if (isset($formError['birthdate'])) { ?><div class="feedback invalid-feedback"><?= $formError['birthdate'] ?></div><?php } ?>
+                        <?php if (isset($formError['birthdate'])) { ?><div class="feedback invalid-feedback"><?= $formError['birthdate'] ?></div><?php } ?>
                       </div>
                       <!--  numéro de téléphone  -->
                       <div class="form-group text-left">
                         <label for="phone">Tél.</label>
                         <input type="text" class="form-control <?= (empty($formError['phone']) ? 'is-valid' : (isset($_POST['phone']) ? 'is-invalid' : '')) ?>" name="phone" id="phone" placeholder="06 25 63 49 75" value="<?= (!empty($_POST['phone']) ? $_POST['phone'] : '') ?>">
                         <?php if (isset($_POST['registerPatient']) && !empty($_POST['phone']) && empty($formError['phone'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-  <?php if (isset($formError['phone'])) { ?><div class="feedback invalid-feedback"><?= $formError['phone'] ?></div><?php } ?>
+                        <?php if (isset($formError['phone'])) { ?><div class="feedback invalid-feedback"><?= $formError['phone'] ?></div><?php } ?>
                       </div>
                       <!--  e-mail  -->
                       <div class="form-group text-left">
                         <label for="mail">E-mail</label>
                         <input type="mail" class="form-control <?= (empty($formError['mail']) ? 'is-valid' : 'is-invalid') ?>" name="mail" id="mail" aria-describedby="mailHelp" placeholder="jb.dupond@gmail.com" value="<?= (!empty($_POST['mail']) ? $_POST['mail'] : '') ?>">
                         <?php if (isset($_POST['registerPatient']) && !empty($_POST['mail']) && empty($formError['mail'])) { ?><div class="feedback valid-feedback">Champ renseigné avec succès</div><?php } ?>
-  <?php if (isset($formError['mail'])) { ?><div class="feedback invalid-feedback"><?= $formError['mail'] ?></div><?php } ?>
+                        <?php if (isset($formError['mail'])) { ?><div class="feedback invalid-feedback"><?= $formError['mail'] ?></div><?php } ?>
                         <small id="mailHelp" class="form-text">Vous seul aurez vu de votre e-mail.</small>
                       </div>
                       <div class="row justify-content-end">
@@ -105,7 +103,6 @@ include_once 'php/controllers/ajoutPatientCtrl.php';
                       </div>
                     </fieldset>
                   </form>
-<?php } ?>
               </div>
             </div>
           </div>

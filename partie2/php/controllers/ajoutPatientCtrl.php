@@ -21,6 +21,9 @@ if (isset($_POST['registerPatient'])){
         $formError[$postName] = $regex->error;
       }else{
         // assignation de la valeur de l'attribut de l'objet de la regex dans l'objet patient
+        if($regex->valueType == 'phone'){
+          $regex->value = str_replace(' ', '', $regex->value);
+        }
         $patient->$postName = $regex->value;
       }
     }
