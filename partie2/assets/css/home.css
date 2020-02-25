@@ -175,3 +175,15 @@ searchPatientInput{
   background: none;
   padding: none;
 }
+#rowsPerPageForm{
+  margin-top: 0;
+  background: none;
+  padding: initial;
+}
+#labelRowsPerPageForm{
+  display: inline-block;
+}
+#rowsPerPage{
+  display: inline-block;
+
+}

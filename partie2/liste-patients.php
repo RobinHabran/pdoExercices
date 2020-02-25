@@ -20,6 +20,7 @@ include_once 'php/controllers/listePatientCtrl.php';
     <!-- js du projet -->
     <link rel="stylesheet" href="assets/js/home.js">
     <script src="https://kit.fontawesome.com/47162c995d.js" crossorigin="anonymous"></script>
+    <script src="assets/js/home.js" ></script>
     <!-- titre d'onglet -->
     <title>H - Cabinet Médical</title>
   </head>
@@ -60,6 +61,15 @@ include_once 'php/controllers/listePatientCtrl.php';
                   <input type="text" placeholder="Jean BENOIT" name="searchPatientInput" id="searchPatientInput" </>
                   <button title="rechercher" type="submit" name="searchPatient" value="" id="searchPatient" class="fa fa-search btn btn-success"></button>
                 </form>
+                <form action="#" method="POST" id="rowsPerPageForm">
+                  <label for="rowsPerPageForm" id="labelRowsPerPageForm">lignes par page</label>
+                  <select name="rowsPerPage" id="rowsPerPage" onchange="submitSelectForm()">
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </form>
               </div>
             </div>
             <table class="tableaux table-striped">
@@ -72,22 +82,37 @@ include_once 'php/controllers/listePatientCtrl.php';
               </tr>
               <?php
               foreach ($patientsList as $patient) {
-              ?>
-              <tr>
-                <td><?= $patient->lastname ?></td>
-                <td><?= $patient->firstname ?></td>
-                <td><?= $patient->birthdate ?></td>
-                <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
-              <form action="#" method="POST">
-                <td>
-                  <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
-                </td>
-              </form>
-              </tr>
-              <?php
+                ?>
+                <tr>
+                  <td><?= $patient->lastname ?></td>
+                  <td><?= $patient->firstname ?></td>
+                  <td><?= $patient->birthdate ?></td>
+                  <td> <a href="profil-patient.php?id=<?= $patient->id ?>"><i class="fas fa-plus btn btn-success"></i></a> </td>
+                <form action="#" method="POST">
+                  <td>
+                    <button type="submit" name="deletePatient" value="<?= $patient->id ?>" id="deletePatient" class="fas fa-trash-alt btn btn-danger"></button>
+                  </td>
+                </form>
+                </tr>
+                <?php
               }
               ?>
             </table>
+            <div class="row h-100 justify-content-center">
+              <div class="col-lg-12 align-self-baseline justify-content-center">
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group mr-2" role="group" aria-label="First group">
+                    <?php for ($i = 3; $i >= 1; $i--) { ?>
+                      <?php if ($currentPage - $i >= 1) { ?><a href="liste-patients.php?page=<?= $currentPage - $i; ?>" class="btn btn-secondary"><?= $currentPage - $i; ?></a><?php } ?>
+                    <?php } ?>
+                    <a href="liste-patients.php?page=<?= $currentPage; ?>" class="btn btn-success"><?= $currentPage; ?></a>
+                    <?php for ($i = 1; $i <= 3; $i++) { ?>
+                      <?php if ($currentPage + $i >= ceil($paginationNumberPage['numberPages'])) { ?><a href="liste-patients.php?page=<?= $currentPage + $i; ?>" class="btn btn-secondary"><?= $currentPage + $i; ?></a><?php } ?>
+                    <?php } ?>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

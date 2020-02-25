@@ -81,28 +81,38 @@ class patient {
 //    return $statement->fetchAll(PDO::FETCH_OBJ);
 //  }
   // get patient list pour méthode search patient n°2
-  public function getPatientsList($whereArray = array()) {
+  public function getPatientsList($offsetPage = 0, $rowsPerPage = 10, $whereArray = array()) {
     $queryPatientsList = 'SELECT '
-                       . '    `id`, `firstname`, `lastname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdate`,`mail`,`phone` '
-                       . ' FROM `patients` ';
+            . '    `id`, `firstname`, `lastname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdate`,`mail`,`phone` '
+            . ' FROM `patients` ';
 
     if (count($whereArray) > 0) {
       $queryPatientsList .= 'WHERE ';
       $whereParts = array();
-      
       foreach ($whereArray as $column => $value) {
         $whereParts[] = '`' . $column . '` LIKE :' . $column;
       }
       $queryPatientsList .= implode(' OR ', $whereParts);
     }
-    $queryPatientsList .= ' ORDER BY `lastname`';
+    $queryPatientsList .= ' ORDER BY `lastname` LIMIT :rowsPerPage OFFSET :offsetPage';
     $statement = $this->dataBase->prepare($queryPatientsList);
+    $statement->bindValue(':offsetPage', $offsetPage, PDO::PARAM_INT);
+    $statement->bindValue(':rowsPerPage', $rowsPerPage, PDO::PARAM_INT);
     foreach ($whereArray as $column => $value) {
       $statement->bindValue(':' . $column, $value, PDO::PARAM_STR);
     }
     $statement->execute();
     //puis on récupère le résultat. fetchAll prend un paramètre PDO::FETCH_OBJ, on récupère un tableaue tableaux et un tableau d'objets
     return $statement->fetchAll(PDO::FETCH_OBJ);
+  }
+
+  public function countPaginationNumberPage($rowsPerPage = 10) {
+    $request = 'SELECT COUNT(id)/:rowsPerPage AS `numberPages` '
+            . 'FROM `patients`';
+    $statement = $this->dataBase->prepare($request);
+    $statement->bindValue(':rowsPerPage', $rowsPerPage, PDO::PARAM_INT);
+    $statement->execute();
+    return $statement->fetch(PDO::FETCH_NUM[0]);
   }
 
   /**
