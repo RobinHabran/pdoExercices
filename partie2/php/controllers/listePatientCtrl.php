@@ -9,10 +9,28 @@ if (isset($_POST['deletePatient'])) {
   }
 }
 
+// Méthode numéro 1 :
+// Recherche d'un patient 
+//if (isset($_POST['searchPatient'])) {
+//  if (!empty($_POST['searchPatientInput'])) {
+//    $patients->lastname = $patients->firstname = $patients->mail = $patients->phone = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
+//    $patientList = $patients->searchPatient();
+//  }
+//} else {
+//  $patientsList = $patients->getPatientsList();
+//}
+// Méthode numéro 2:
+// Recherche d'un patient 
 if (isset($_POST['searchPatient'])) {
   if (!empty($_POST['searchPatientInput'])) {
-    $patients->lastname = $patients->firstname = $patients->mail = $patients->phone = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
-    $patientList = $patients->searchPatient();
+    $searchArray = array();
+    $searchArray['lastname'] = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
+    $searchArray['firstname'] = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
+    $searchArray['phone'] = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
+    $searchArray['mail'] = '%' . htmlspecialchars($_POST['searchPatientInput']) . '%';
+    $patientsList = $patients->getPatientsList($searchArray);
+  } else {
+    $patientsList = $patients->getPatientsList();
   }
 } else {
   $patientsList = $patients->getPatientsList();

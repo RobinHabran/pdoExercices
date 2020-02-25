@@ -47,7 +47,7 @@ include_once 'php/controllers/listePatientCtrl.php';
         </div>
       </div>
       <div class="container">
-        <div class="row h-100 justify-content-center">=
+        <div class="row h-100 justify-content-center">
           <div class="col-lg-10 align-self-baseline justify-content-center table-responsive">
             <div class="row h-100 headerForm">
               <div class="col-lg-6 align-self-baseline titleHeadForm">

@@ -72,11 +72,36 @@ class patient {
     return $statement->execute();
   }
 
-  public function getPatientsList() {
-    $request = 'SELECT `id`, UPPER(`lastname`) AS `lastname`, `firstname`, DATE_FORMAT(`birthdate`,\'%d/%m/%Y\') AS `birthdate` '
-            . ' FROM `patients`'
-            . ' ORDER BY `lastname`';
-    $statement = $this->dataBase->query($request);
+  // get patient list pour méthode search patient n°1
+//  public function getPatientsList() {
+//    $request = 'SELECT `id`, UPPER(`lastname`) AS `lastname`, `firstname`, DATE_FORMAT(`birthdate`,\'%d/%m/%Y\') AS `birthdate` '
+//            . ' FROM `patients`'
+//            . ' ORDER BY `lastname`';
+//    $statement = $this->dataBase->query($request);
+//    return $statement->fetchAll(PDO::FETCH_OBJ);
+//  }
+  // get patient list pour méthode search patient n°2
+  public function getPatientsList($whereArray = array()) {
+    $queryPatientsList = 'SELECT '
+                       . '    `id`, `firstname`, `lastname`, DATE_FORMAT(`birthdate`, \'%d/%m/%Y\') AS `birthdate`,`mail`,`phone` '
+                       . ' FROM `patients` ';
+
+    if (count($whereArray) > 0) {
+      $queryPatientsList .= 'WHERE ';
+      $whereParts = array();
+      
+      foreach ($whereArray as $column => $value) {
+        $whereParts[] = '`' . $column . '` LIKE :' . $column;
+      }
+      $queryPatientsList .= implode(' OR ', $whereParts);
+    }
+    $queryPatientsList .= ' ORDER BY `lastname`';
+    $statement = $this->dataBase->prepare($queryPatientsList);
+    foreach ($whereArray as $column => $value) {
+      $statement->bindValue(':' . $column, $value, PDO::PARAM_STR);
+    }
+    $statement->execute();
+    //puis on récupère le résultat. fetchAll prend un paramètre PDO::FETCH_OBJ, on récupère un tableaue tableaux et un tableau d'objets
     return $statement->fetchAll(PDO::FETCH_OBJ);
   }
 
