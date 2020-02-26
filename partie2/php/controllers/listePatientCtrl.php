@@ -2,16 +2,25 @@
 
 $patients = new patient();
 
-$rowsPerPage = (is_int($_POST['rowsPerPage'])) ? htmlspecialchars($_POST['rowsPerPage']) : 10;
-
+// pagination
+$rowsPerPage = (isset($_REQUEST['rowsPerPage']) && preg_match('/^[\d]+$/', $_REQUEST['rowsPerPage'])) ? htmlspecialchars($_REQUEST['rowsPerPage']) : 10;
 $paginationNumberPage = $patients->countPaginationNumberPage($rowsPerPage);
-if (isset($_GET['page'])) {
-  $currentPage = htmlspecialchars(intval($_GET['page']));
+$paginationNumberPage['numberPages'] = ceil($paginationNumberPage['numberPages']);
+
+if (isset($_REQUEST['page']) && preg_match('/^[\d]+$/', $_REQUEST['page'])) {
+  if ($_REQUEST['page'] < 1) {
+    $currentPage = 1;
+  } elseif ($_REQUEST['page'] > $paginationNumberPage['numberPages']) {
+    $currentPage = $paginationNumberPage['numberPages'];
+  } else {
+    $currentPage = htmlspecialchars($_REQUEST['page']);
+  }
 } else {
   $currentPage = 1;
 }
 $offsetPage = ($currentPage - 1) * $rowsPerPage;
 
+// suppression patient
 if (isset($_POST['deletePatient'])) {
   if ($_POST['deletePatient']) {
     $patients->id = $_POST['deletePatient'];

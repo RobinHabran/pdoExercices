@@ -64,10 +64,10 @@ include_once 'php/controllers/listePatientCtrl.php';
                 <form action="#" method="POST" id="rowsPerPageForm">
                   <label for="rowsPerPageForm" id="labelRowsPerPageForm">lignes par page</label>
                   <select name="rowsPerPage" id="rowsPerPage" onchange="submitSelectForm()">
-                    <option value="10">10</option>
-                    <option value="30">30</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                    <option value="10" <?php if (isset($_REQUEST['rowsPerPage']) && $_REQUEST['rowsPerPage'] == 10) echo 'selected'; ?> >10</option>
+                    <option value="30" <?php if (isset($_REQUEST['rowsPerPage']) && $_REQUEST['rowsPerPage'] == 30) echo 'selected'; ?> >30</option>
+                    <option value="50" <?php if (isset($_REQUEST['rowsPerPage']) && $_REQUEST['rowsPerPage'] == 50) echo 'selected'; ?> >50</option>
+                    <option value="100" <?php if (isset($_REQUEST['rowsPerPage']) && $_REQUEST['rowsPerPage'] == 100) echo 'selected'; ?> >100</option>
                   </select>
                 </form>
               </div>
@@ -98,19 +98,15 @@ include_once 'php/controllers/listePatientCtrl.php';
               }
               ?>
             </table>
-            <div class="row h-100 justify-content-center">
-              <div class="col-lg-12 align-self-baseline justify-content-center">
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                  <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <?php for ($i = 3; $i >= 1; $i--) { ?>
-                      <?php if ($currentPage - $i >= 1) { ?><a href="liste-patients.php?page=<?= $currentPage - $i; ?>" class="btn btn-secondary"><?= $currentPage - $i; ?></a><?php } ?>
-                    <?php } ?>
-                    <a href="liste-patients.php?page=<?= $currentPage; ?>" class="btn btn-success"><?= $currentPage; ?></a>
-                    <?php for ($i = 1; $i <= 3; $i++) { ?>
-                      <?php if ($currentPage + $i >= ceil($paginationNumberPage['numberPages'])) { ?><a href="liste-patients.php?page=<?= $currentPage + $i; ?>" class="btn btn-secondary"><?= $currentPage + $i; ?></a><?php } ?>
-                    <?php } ?>
-                  </div>
-                </div>
+            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+              <div class="btn-group mr-2" role="group" aria-label="First group">
+                <?php for ($i = 3; $i >= 1; $i--) { ?>
+                  <?php if ($currentPage - $i >= 1) { ?><a href="liste-patients.php?page=<?= $currentPage - $i; ?>" class="btn btn-secondary"><?= $currentPage - $i; ?></a><?php } ?>
+                <?php } ?>
+                <a href="liste-patients.php?page=<?= $currentPage; ?>" class="btn btn-success"><?= $currentPage; ?></a>
+                <?php for ($i = 1; $i <= 3; $i++) { ?>
+                  <?php if ($currentPage + $i <= ceil($paginationNumberPage['numberPages'])) { ?><a href="liste-patients.php?page=<?= $currentPage + $i; ?>" class="btn btn-secondary"><?= $currentPage + $i; ?></a><?php } ?>
+                <?php } ?>
               </div>
             </div>
           </div>
